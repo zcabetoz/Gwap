@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *
+ * @UniqueEntity(fields={"username"}, message="El nombre de usuario ya se encuentra registrado")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -48,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $sexo;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     private $fechaNacimiento;
 
@@ -169,12 +170,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFechaNacimiento(): ?\DateTimeInterface
+    public function getFechaNacimiento(): ?string
     {
         return $this->fechaNacimiento;
     }
 
-    public function setFechaNacimiento(\DateTimeInterface $fechaNacimiento): self
+    public function setFechaNacimiento(string $fechaNacimiento): self
     {
         $this->fechaNacimiento = $fechaNacimiento;
 

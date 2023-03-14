@@ -1,9 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RegistroController!{% endblock %}
+{% block title %}Registrar Usuario{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+    <div class="container text-secondary mt-5 fw-semibold">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="bg-white rounded-5 p-5">
+                    <div class="card-header text-center fs-1 fw-semibold">Nuevo Registro</div>
+                    {{ form_start(form) }}
+                    <div class="mb-3 mt-4">
+                        {{ form_label(form.username) }}
+                        {{ form_widget(form.username, {'attr' : {'class':'rounded-3  bg-light'}}) }}
+                        <span class="text-danger"> {{ form_errors(form.username) }}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.password) }}
+                        {{ form_widget(form.password, {'attr' : {'class':'rounded-3  bg-light'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.nombre) }}
+                        {{ form_widget(form.nombre, {'attr' : {'class':'rounded-3  bg-light'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.sexo) }}
+                        {{ form_widget(form.sexo, {'attr' : {'class':'rounded-3  bg-light'}}) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(form.fechaNacimiento) }}
+                        <div class="input-group date" id="datepicker">
+                            {{ form_widget(form.fechaNacimiento, {'attr' : {'class':'rounded-3  bg-light'}} ) }}
+                            <span class="input-group-addon"></span>
+                        </div>
+                    </div>
+                    <p>
+                        {{ form_widget(form.Registrar, {'attr' : {'class' : 'form-control btn btn-primary mt-3 fw-semibold fs-5 rounded-5'}}) }}
+                    </p>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <div>Ya tienes cuenta?</div>
+                        <a href="{{ path('app_login') }}" class="text-decoration-none fw-bold text-primary">Iniciar
+                            sesión</a>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('#datepicker').datepicker();
+        });
+    </script>
 {% endblock %}
