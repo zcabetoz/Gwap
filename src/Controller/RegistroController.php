@@ -41,6 +41,11 @@ class RegistroController extends AbstractController
             $user->setPassword($hashedPassword);
             $this->em->persist($user);
             $this->em->flush();
+            $this->addFlash(
+                'notice',
+                'Registro Exitoso!'
+            );
+
             return $this->redirectToRoute('app_login');
         }
         return $this->render('registro/index.html.twig', [

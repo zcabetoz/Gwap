@@ -53,7 +53,9 @@
 
     <script>
         $(function () {
-            $('#datepicker').datepicker();
+            $('#datepicker').datepicker({
+                format: "dd/mm/yyyy"
+            });
         });
     </script>
 {% endblock %}
