@@ -3,7 +3,6 @@
 {% block title %}Inicio de Sesion{% endblock %}
 
 {% block body %}
-
     <form method="post">
         <div class="bg-white p-5 rounded-5 text-secondary container-fluid shadow mt-5" style="width: 25rem">
             <div class="d-flex justify-content-center">
@@ -13,7 +12,7 @@
 
             <div class="input-group mt-4">
                 <div class="input-group-text bg-primary"><img src="{{ asset('assets/username-icon.svg') }}"
-                                                           alt="username-icon" style="height: 1rem"></div>
+                                                              alt="username-icon" style="height: 1rem"></div>
                 <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
                        class="form-control bg-light"
                        autocomplete="username" required autofocus placeholder="Nombre de usuario">
@@ -21,7 +20,7 @@
 
             <div class="input-group mt-3">
                 <div class="input-group-text bg-primary"><img src="{{ asset('assets/password-icon.svg') }}"
-                                                           alt="password-icon" style="height: 1rem"></div>
+                                                              alt="password-icon" style="height: 1rem"></div>
                 <input type="password" name="password" id="inputPassword" class="form-control bg-light"
                        autocomplete="current-password" required placeholder="Contraseña">
             </div>
@@ -33,23 +32,27 @@
                 </button>
                 <div class="d-flex gap-2 justify-content-center mt-3">
                     <div>No tienes cuenta?</div>
-                    <a href="{{ path('app_registro') }}" class="text-decoration-none fw-bold text-primary">Registrarse</a>
+                    <a href="{{ path('app_registro') }}"
+                       class="text-decoration-none fw-bold text-primary">Registrarse</a>
                 </div>
             </div>
             {% if error %}
-
+                <div class="mt-3 ">
+                    <div class="alert alert-danger alert-dismissible fade show rounded-4 fw-semibold" role="alert">
+                        <strong>Error</strong> Usuario o clave invalida
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
             {% endif %}
-    {% for flashMessage in app.session.flashbag.get('notice') %}
-        <div class="mt-3 ">
-            <div class="alert alert-success alert-dismissible fade show rounded-4 fw-semibold" role="alert">
-                {{ flashMessage }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="mt-3 ">
+                    <div class="alert alert-success alert-dismissible fade show rounded-4 fw-semibold" role="alert">
+                        {{ flashMessage }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-
-        </div>
-
         {% if app.user %}
             <div class="mb-3">
                 You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
