@@ -1,0 +1,44 @@
+
+header {
+    background-color: #7c7c7c;
+    color: #fff;
+    text-align: center;
+
+}
+.enlace{
+    margin-left: 300px;
+}
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2em;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin-bottom: 1.5em;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    margin-bottom: 1em;
+}
+
+li::before {
+    content: "• ";
+    color: #333;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 0.5em;
+}

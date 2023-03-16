@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello JugarController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                Aqui van las imagenes
+            </div>
+            <div class="col-md-4">
+                <h2>Palabras Relacionadas</h2>
+                <ul id="lista de palabras">
+
+                </ul>
+                <form id="formulario-respuesta" method="post">
+                    <label for="respuesta"> Ingresar Palabras</label>
+                    <input type="text" id="respuesta" name="respuesta">
+                    <button type="submit"> Enviar</button>
+                </form>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table id="tabla-puntuaciones">
+                    <thead>
+                    <tr>
+                        <th>Posicion</th>
+                        <th>Usuario</th>
+                        <th>Puntuacion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    aqui se mostraran las puntuaciones de los usuarios
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

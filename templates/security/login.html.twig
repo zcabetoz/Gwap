@@ -28,10 +28,10 @@
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
             <div class="d-grid">
-                <button class="btn btn-primary  d-grid mt-4 rounded-5" type="submit">
+                <button class="btn btn-primary  d-grid mt-5 rounded-5" type="submit">
                     Iniciar Sesion
                 </button>
-                <div class="d-flex gap-2 justify-content-center mt-2">
+                <div class="d-flex gap-2 justify-content-center mt-3">
                     <div>No tienes cuenta?</div>
                     <a href="{{ path('app_registro') }}" class="text-decoration-none fw-bold text-primary">Registrarse</a>
                 </div>
