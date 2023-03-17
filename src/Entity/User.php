@@ -14,7 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    const REGISTRO_EXITOSO = "Registro exitoso";
+    const REGISTRO_EXITOSO = "Registro exitoso!";
+    const USUARIO_CLAVE_INVALIDA = "Usuario o clave invalida";
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

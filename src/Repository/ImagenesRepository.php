@@ -39,6 +39,17 @@ class ImagenesRepository extends ServiceEntityRepository
         }
     }
 
+    public function findUrlImagen($idImagen){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT imagen.imagenUrl
+                FROM App:Imagenes imagen
+                WHERE imagen.id = :id
+                ')
+            ->setParameter('id', $idImagen)
+            ->getResult();
+    }
+
 //    /**
 //     * @return Imagenes[] Returns an array of Imagenes objects
 //     */

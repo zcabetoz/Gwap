@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/styleDashboard.css') }}">
     <nav class="navbar navbar-expand-md navbar-dark bg-primary">
         <div class="container">
-            <a href="#" class="navbar-brand d-flex gap-2">
+            <a class="navbar-brand d-flex gap-2">
                 <i class="bi bi-joystick"></i>
                 <span>Gwap</span>
             </a>
@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav ms-auto gap-5">
                     <li class="nav-item">
-                        <a href="#" class="nav-link active" aria-current="page">Estadisticas</a>
+                        <a href="#" class="nav-link active" aria-current="page">Estadísticas</a>
                     </li>
                     <li class="nav-item"><a href="{{ path('app_reglas') }}" class="nav-link active">Reglas</a></li>
                     <li class="nav-item"><span class="nav-link active"><i
@@ -38,10 +38,37 @@
                 Partidas Disponibles
             </div>
             <div class="card-body">
+                <div class="table-responsive text-center mt-3">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>Sala</th>
+                            <th>Usuarios</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for data in data %}
+                            <tr>
+                                <td>
+                                    {{ data.sala.sala }}
+                                </td>
+                                <td>
+                                    {{ data.users }}
+                                </td>
+
+                                <td>
+                                    <a href="{{ path('app_jugar', {sala : data.sala.sala}) }}" class="btn btn-primary">Unirse</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
     <div class="text-center mt-5">
-        <buttom class="btn btn-primary fs-3"> Crear partida</buttom>
+        <a href="#" class="btn btn-primary fs-3"> Crear partida</a>
     </div>
 {% endblock %}

@@ -5,8 +5,10 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                Aqui van las imagenes
+            <div class="col-md-8 mt-5">
+                {% for direccion in url %}
+                    <img src="{{ asset(direccion.imagenUrl) }}" style="height: 400px;width: 400px">
+                {% endfor %}
             </div>
             <div class="col-md-4">
                 <h2>Palabras Relacionadas</h2>
@@ -25,15 +27,14 @@
                 <table id="tabla-puntuaciones">
                     <thead>
                     <tr>
-                        <th>Posicion</th>
+                        <th>Posición</th>
                         <th>Usuario</th>
-                        <th>Puntuacion</th>
+                        <th>Puntuación</th>
                     </tr>
                     </thead>
                     <tbody>
-                    aqui se mostraran las puntuaciones de los usuarios
+                    aquí se mostrarán las puntuaciones de los usuarios
                     </tbody>
-
                 </table>
             </div>
         </div>

@@ -29,6 +29,9 @@ class RegistroController extends AbstractController
      */
     public function crearIndex(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_dashboard');
+        }
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -43,9 +46,8 @@ class RegistroController extends AbstractController
             $this->em->flush();
             $this->addFlash(
                 'notice',
-                'Registro Exitoso!'
+                User::REGISTRO_EXITOSO
             );
-
             return $this->redirectToRoute('app_login');
         }
         return $this->render('registro/index.html.twig', [

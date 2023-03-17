@@ -23,10 +23,10 @@ class Palabra
     private $palabra;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Imagen")
+     * @ORM\ManyToOne(targetEntity="Imagenes")
      * @ORM\JoinColumn(name="imagen_id", referencedColumnName="id")
      */
-    private $imagen;
+    private $id_imagen;
 
     /**
      * @return mixed
@@ -63,16 +63,16 @@ class Palabra
     /**
      * @return mixed
      */
-    public function getImagen()
+    public function getIdImagen()
     {
-        return $this->imagen;
+        return $this->id_imagen;
     }
 
     /**
-     * @param mixed $imagen
+     * @param mixed $id_imagen
      */
-    public function setImagen($imagen): void
+    public function setIdImagen($id_imagen): void
     {
-        $this->imagen = $imagen;
+        $this->id_imagen = $id_imagen;
     }
 }

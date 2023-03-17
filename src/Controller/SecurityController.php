@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,9 +15,9 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-//         if ($this->getUser()) {
-//             return $this->redirectToRoute('app_dashboard', array('username'=>$this->getUser()));
-//         }
+         if ($this->getUser()) {
+             return $this->redirectToRoute('app_dashboard');
+         }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -26,7 +27,8 @@ class SecurityController extends AbstractController
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
+            'mensaje'=>User::USUARIO_CLAVE_INVALIDA
         ]);
     }
 
@@ -35,7 +37,6 @@ class SecurityController extends AbstractController
      */
     public function logout(): void
     {
-//        $this->redirectToRoute('app_login');
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
