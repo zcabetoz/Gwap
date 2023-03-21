@@ -42,7 +42,7 @@ class ImagenesRepository extends ServiceEntityRepository
     public function findUrlImagen($idImagen){
         return $this->getEntityManager()
             ->createQuery('
-                SELECT imagen.imagenUrl
+                SELECT imagen.imagenUrl, imagen.descripcion
                 FROM App:Imagenes imagen
                 WHERE imagen.id = :id
                 ')

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Imagenes;
 use App\Entity\Partidas;
 use App\Entity\User;
 use App\Repository\PartidasRepository;
@@ -28,9 +29,12 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/", name="app_dashboard")
      */
-    public function index(): Response
+    public function mostrarPartidasAction(): Response
     {
         $user = $this->getUser();
+        if (!isset($user)) {
+            return $this->redirectToRoute('app_login');
+        }
         $partidas = $this->em->getRepository(Partidas::class)->findBySala();
         $salas = [];
         foreach ($partidas as $numeroSala) {
@@ -40,10 +44,10 @@ class DashboardController extends AbstractController
         }
         $data = [];
         foreach ($salas as $salaId) {
-            $usuarios = $this->em->getRepository(Partidas::class)->findUsuariosSalas($salaId['sala']);
+            $jugadoresSala = $this->em->getRepository(Partidas::class)->findUsuariosSalas($salaId['sala']);
             $users = '';
-            foreach ($usuarios as $usuario) {
-                $users .= $usuario['username'] . ', ';
+            foreach ($jugadoresSala as $jugador) {
+                $users .= $jugador['username'] . ', ';
             }
             $data[] = [
                 'sala' => $salaId,
@@ -51,10 +55,41 @@ class DashboardController extends AbstractController
             ];
         }
 
+        $salaJugador = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
+
         return $this->render('dashboard/index.html.twig', [
-            'usuario' => $user->getUserIdentifier(),
+            'usuario' => $user,
             'data' => $data,
-            'imagen' => $partidas
+            'imagen' => $partidas,
+            'salaJugador' => $salaJugador,
         ]);
+    }
+
+    /**
+     * @Route("/dashboard/crear-partida", name="app_dashboard_crearpartida")
+     */
+    public function crearPartidaAction()
+    {
+        $jugando = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
+        $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
+        $contador = empty($contadorSalas) ? 0 : $contadorSalas[0]['contador_salas'];
+        if (!$jugando) {
+            $cantidadImagenes = $this->em->getRepository(Imagenes::class)->findAll();
+            $imagenAleatoria = rand(1, count($cantidadImagenes));
+            $imagenId = $this->em->getRepository(Imagenes::class)->find($imagenAleatoria);
+            $partidas = new Partidas($contador + 1, $contador+1);
+            $partidas->setUsuarioId($this->getUser());
+            $partidas->setImagenesId($imagenId);
+            $this->em->persist($partidas);
+            $this->em->flush();
+
+        } else {
+            $this->addFlash(
+                'notice',
+                Partidas::JUGANDO
+            );
+            return $this->redirectToRoute('app_dashboard');
+        }
+        return $this->redirectToRoute('app_jugar', array('sala' => $contador + 1));
     }
 }

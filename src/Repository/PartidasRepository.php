@@ -38,7 +38,9 @@ class PartidasRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function findBySala(){
+
+    public function findBySala()
+    {
         return $this->getEntityManager()
             ->createQuery('
                 SELECT partidas.sala
@@ -46,7 +48,9 @@ class PartidasRepository extends ServiceEntityRepository
             ')
             ->getResult();
     }
-    public function findUsuariosSalas($idSala){
+
+    public function findUsuariosSalas($idSala)
+    {
         return $this->getEntityManager()
             ->createQuery('
                 SELECT usuario.username
@@ -57,15 +61,43 @@ class PartidasRepository extends ServiceEntityRepository
             ->setParameter('id', $idSala)
             ->getResult();
     }
-    public function findImagen($idSala){
+
+    public function findImagen($idSala)
+    {
         return $this->getEntityManager()
             ->createQuery('
-               SELECT imagen.id
+               SELECT imagen.id 
                FROM App:Partidas partidas
                JOIN partidas.imagenesId imagen
                WHERE partidas.sala = :id
             ')
             ->setParameter('id', $idSala)
+            ->setMaxResults(1)
+            ->getResult();
+    }
+
+    public function findJugando($idJugador)
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT usuario.id, partidas.sala
+                FROM App:Partidas partidas
+                JOIN partidas.usuarioId usuario
+                WHERE partidas.usuarioId =:idUsuario
+            ')
+            ->setParameter('idUsuario', $idJugador)
+            ->setMaxResults(1)
+            ->getResult();
+    }
+
+    public function findNumeroSalas()
+    {
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT partidas.contador_salas
+                FROM App:Partidas partidas
+                ORDER BY partidas.contador_salas DESC 
+            ')
             ->setMaxResults(1)
             ->getResult();
     }

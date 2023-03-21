@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Partidas
 {
+    const JUGANDO = "Ya te encuentras en una partida!";
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -33,6 +34,17 @@ class Partidas
      * @ORM\Column(type="integer")
      */
     private $sala;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $contador_salas;
+
+    public function __construct($sala = null, $contador_salas = null)
+    {
+        $this->sala = $sala;
+        $this->contador_salas = $contador_salas;
+    }
 
 
     public function getId(): ?int
@@ -72,6 +84,18 @@ class Partidas
     public function setSala(int $sala): self
     {
         $this->sala = $sala;
+
+        return $this;
+    }
+
+    public function getContadorSalas(): ?int
+    {
+        return $this->contador_salas;
+    }
+
+    public function setContadorSalas(int $contador_salas): self
+    {
+        $this->contador_salas = $contador_salas;
 
         return $this;
     }
