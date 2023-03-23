@@ -1,0 +1,39 @@
+{% block body %}
+    <div class="table-responsive text-center mt-3">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Sala</th>
+                <th>Usuarios</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in data %}
+                <tr>
+                    <td>
+                        {{ data.sala.sala }}
+                    </td>
+                    <td>
+                        {{ data.users | lower }}
+                    </td>
+                    <td>
+                        {% if(salaJugador is empty) %}
+                            <a href="{{ path('app_jugar', {sala : data.sala.sala, idJugador : usuario.getId()}) }}"
+                               class="btn btn-primary">Unirse</a>
+                        {% else %}
+                            {% if (data.sala.sala == salaJugador.0.sala) %}
+                                <a href="{{ path('app_jugar', {sala : data.sala.sala, idJugador : usuario.getId()}) }}"
+                                   class="btn btn-primary">Unirse</a>
+                            {% else %}
+                                <a href="{{ path('app_jugar', {sala : data.sala.sala, idJugador : usuario.getId()}) }}"
+                                   class="btn btn-danger disabled">Unirse</a>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
 
-
     private $em;
 
     /**
@@ -35,6 +34,20 @@ class DashboardController extends AbstractController
         if (!isset($user)) {
             return $this->redirectToRoute('app_login');
         }
+        return $this->render('dashboard/index.html.twig', [
+            'usuario' => $user,
+            'data' =>[],
+        ]);
+    }
+
+
+    /**
+     * @Route("/salas-disponible/", name="app_salas_disponibles" , options={"expose"=true})
+     */
+    public function mostrarSalasAction(): Response
+    {
+        $user = $this->getUser();
+
         $partidas = $this->em->getRepository(Partidas::class)->findBySala();
         $salas = [];
         foreach ($partidas as $numeroSala) {
@@ -54,14 +67,13 @@ class DashboardController extends AbstractController
                 'users' => $users
             ];
         }
-
         $salaJugador = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
 
-        return $this->render('dashboard/index.html.twig', [
-            'usuario' => $user,
+        return $this->render('dashboard/salas.html.twig', [
             'data' => $data,
-            'imagen' => $partidas,
             'salaJugador' => $salaJugador,
+            'usuario' => $user,
+
         ]);
     }
 
