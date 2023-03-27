@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Imagenes;
+use App\Entity\Palabra;
 use App\Entity\Partidas;
 use App\Entity\User;
 use App\Entity\UsuarioPalabras;
@@ -50,7 +51,8 @@ class JugarController extends AbstractController
         return $this->render('jugar/index.html.twig', [
             'sala' => $sala,
             'url' => $urlImagen,
-            'palabrasUsuario'=>[]
+            'palabrasUsuario'=>[],
+            'idImagen'=>$idImagen
         ]);
     }
 
@@ -59,16 +61,26 @@ class JugarController extends AbstractController
      */
     public function palabraRelacionadaIndex(Request $request)
     {
+        $idUsuario = $this->getUser()->getId();
+        $get =$request->query->all();
+        $palabraForm = $request->request->get('palabra');
+        $idImagen = $get['idImagen'];
         $usuario = $this->getUser();
-        if ($request->isXmlHttpRequest()) {
-            $palabraForm = $request->request->get('palabra');
-            $palabraRelacionada = new UsuarioPalabras($palabraForm);
-            $palabraRelacionada->setIdUsuario($usuario);
-            $this->em->persist($palabraRelacionada);
-            $this->em->flush();
-            return new JsonResponse(['palabra'=>$palabraForm]);
-        } else {
-            throw new \Exception(' :-( ');
+        $palabraExiste = $this->em->getRepository(UsuarioPalabras::class)->findByPalabraExiste($palabraForm, $idUsuario);
+        if($palabraExiste){
+            return new JsonResponse(['palabra'=>'existe', 'imagen'=>$idImagen]);
+        }else{
+            $palabraCorrecta = $this->em->getRepository(Palabra::class)->findByPalabraCorrecta($palabraForm, $idImagen);
+            if ($request->isXmlHttpRequest()) {
+                $resultado = $palabraCorrecta ? 'CORRECTO' : 'INCORRECTO';
+                $palabraRelacionada = new UsuarioPalabras($palabraForm, $resultado);
+                $palabraRelacionada->setIdUsuario($usuario);
+                $this->em->persist($palabraRelacionada);
+                $this->em->flush();
+                return new JsonResponse(['palabra'=>$palabraForm, 'imagen'=>$idImagen] );
+            } else {
+                throw new \Exception(' :-( ');
+            }
         }
     }
 

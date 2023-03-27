@@ -42,11 +42,24 @@ class UsuarioPalabrasRepository extends ServiceEntityRepository
     public function findPalabras($idUsuario){
         return $this->getEntityManager()
             ->createQuery('
-                SELECT palabras.palabras_relacionadas
+                SELECT palabras.palabras_relacionadas, palabras.resultado_palabra
                 FROM App:UsuarioPalabras palabras
                 WHERE palabras.id_usuario = :id
             ')
             ->setParameter('id',$idUsuario)
+            ->getResult();
+    }
+
+    public function findByPalabraExiste($palabraForm, $idUsuario){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT palabras.palabras_relacionadas
+                FROM App:UsuarioPalabras palabras
+                WHERE palabras.palabras_relacionadas = :palabra AND palabras.id_usuario = :id
+            ')
+            ->setParameter('palabra', $palabraForm)
+            ->setParameter('id', $idUsuario)
+            ->setMaxResults(1)
             ->getResult();
     }
 

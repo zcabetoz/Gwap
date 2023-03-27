@@ -28,9 +28,15 @@ class UsuarioPalabras
      */
     private $palabras_relacionadas;
 
-    public function __construct($palabras_relacionadas=null)
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $resultado_palabra;
+
+    public function __construct($palabras_relacionadas=null, $resultado_palabra = null)
     {
         $this->palabras_relacionadas = $palabras_relacionadas;
+        $this->resultado_palabra = $resultado_palabra;
     }
 
     public function getId(): ?int
@@ -58,6 +64,18 @@ class UsuarioPalabras
     public function setPalabrasRelacionadas(string $palabras_relacionadas): self
     {
         $this->palabras_relacionadas = $palabras_relacionadas;
+
+        return $this;
+    }
+
+    public function getResultadoPalabra(): ?string
+    {
+        return $this->resultado_palabra;
+    }
+
+    public function setResultadoPalabra(string $resultado_palabra): self
+    {
+        $this->resultado_palabra = $resultado_palabra;
 
         return $this;
     }

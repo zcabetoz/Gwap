@@ -39,6 +39,18 @@ class PalabraRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByPalabraCorrecta($palabraForm, $idImagen){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT palabras.palabra
+                FROM App:Palabra palabras
+                WHERE palabras.id_imagen = :id AND palabras.palabra = :palabra
+            ')
+            ->setParameter('id',$idImagen)
+            ->setParameter('palabra', $palabraForm)
+            ->setMaxResults(1)
+            ->getResult();
+    }
 //    /**
 //     * @return Palabra[] Returns an array of Palabra objects
 //     */
