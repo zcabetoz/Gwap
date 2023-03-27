@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Imagenes;
 use App\Entity\Partidas;
 use App\Entity\User;
+use App\Entity\UsuarioPalabras;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,9 +35,9 @@ class JugarController extends AbstractController
         $idImagen = $this->em->getRepository(Partidas::class)->findImagen($sala);
         $get = $request->query->all();
 
-        if(isset($get['idJugador'])){
+        if (isset($get['idJugador'])) {
             $jugando = $this->em->getRepository(Partidas::class)->findJugando($get['idJugador']);
-            if(!$jugando){
+            if (!$jugando) {
                 $jugador = $this->em->getRepository(User::class)->find($get['idJugador']);
                 $imagen = $this->em->getRepository(Imagenes::class)->find($idImagen[0]['id']);
                 $partida->setUsuarioId($jugador);
@@ -47,7 +49,37 @@ class JugarController extends AbstractController
         $urlImagen = $this->em->getRepository(Imagenes::class)->findUrlImagen($idImagen);
         return $this->render('jugar/index.html.twig', [
             'sala' => $sala,
-            'url' => $urlImagen
+            'url' => $urlImagen,
+            'palabrasUsuario'=>[]
+        ]);
+    }
+
+    /**
+     * @Route("/guardar-palabras",name="app_guardar_palabras", options={"expose"=true})
+     */
+    public function palabraRelacionadaIndex(Request $request)
+    {
+        $usuario = $this->getUser();
+        if ($request->isXmlHttpRequest()) {
+            $palabraForm = $request->request->get('palabra');
+            $palabraRelacionada = new UsuarioPalabras($palabraForm);
+            $palabraRelacionada->setIdUsuario($usuario);
+            $this->em->persist($palabraRelacionada);
+            $this->em->flush();
+            return new JsonResponse(['palabra'=>$palabraForm]);
+        } else {
+            throw new \Exception(' :-( ');
+        }
+    }
+
+    /**
+     *@Route("/resultados-parciales", name="app_resultados_parciales", options={"expose"= true})
+     */
+    public function resultadosParcialesIndex(){
+        $usuario = $this->getUser()->getId();
+        $palabrasUsuario = $this->em->getRepository(UsuarioPalabras::class)->findPalabras($usuario);
+        return $this->render('jugar/resultadosParciales.html.twig',[
+            'palabrasUsuario'=>$palabrasUsuario
         ]);
     }
 }

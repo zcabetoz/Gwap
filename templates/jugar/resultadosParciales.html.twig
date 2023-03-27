@@ -1,0 +1,21 @@
+{% block body %}
+    <div class="table-responsive text-center mt-5">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>Palabras ingresadas</th>
+                <th>Resultado</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for palabras in palabrasUsuario %}
+                <tr>
+                    <td>
+                        {{ palabras.palabras_relacionadas }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

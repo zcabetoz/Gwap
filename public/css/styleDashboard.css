@@ -1,18 +1,17 @@
 .card-header{
+    margin-top: 10px;
     text-align: center;
     font-size: 2rem;
-    margin-top: 3rem;
     font-weight: bold;
     color: #ffffff;
 }
 .card-body{
     border-radius: 20px;
-    margin-top: 3rem;
+    margin-top: 10px;
     height: 350px;
     width: 350px;
     background-color: #d9d6d6;
 }
-
 .container{
     width: 800px;
     display: flex;

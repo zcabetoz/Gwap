@@ -40,14 +40,12 @@ class DashboardController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/salas-disponible/", name="app_salas_disponibles" , options={"expose"=true})
      */
     public function mostrarSalasAction(): Response
     {
         $user = $this->getUser();
-
         $partidas = $this->em->getRepository(Partidas::class)->findBySala();
         $salas = [];
         foreach ($partidas as $numeroSala) {
@@ -73,7 +71,6 @@ class DashboardController extends AbstractController
             'data' => $data,
             'salaJugador' => $salaJugador,
             'usuario' => $user,
-
         ]);
     }
 

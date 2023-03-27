@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}Salas | {{ parent() }}{% endblock %}
 
 {% block body %}
     <link rel="stylesheet" href="{{ asset('css/styleDashboard.css') }}">
@@ -42,7 +42,7 @@
                 {% include 'dashboard/salas.html.twig' %}
             </div>
 
-            <div class="text-center mt-5">
+            <div class="text-center mt-2">
                 <a href="{{ path('app_dashboard_crearpartida') }}"
                    class="btn btn-primary fs-3">
                     Crear partida</a>
@@ -69,4 +69,9 @@
             setTimeout(tempo, 2000);
         }
     </script>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 {% endblock %}
