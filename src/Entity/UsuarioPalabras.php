@@ -33,10 +33,16 @@ class UsuarioPalabras
      */
     private $resultado_palabra;
 
-    public function __construct($palabras_relacionadas=null, $resultado_palabra = null)
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $id_imagen;
+
+    public function __construct($palabras_relacionadas=null, $resultado_palabra = null, $id_imagen)
     {
         $this->palabras_relacionadas = $palabras_relacionadas;
         $this->resultado_palabra = $resultado_palabra;
+        $this->id_imagen = $id_imagen;
     }
 
     public function getId(): ?int
@@ -76,6 +82,18 @@ class UsuarioPalabras
     public function setResultadoPalabra(string $resultado_palabra): self
     {
         $this->resultado_palabra = $resultado_palabra;
+
+        return $this;
+    }
+
+    public function getIdImagen(): ?int
+    {
+        return $this->id_imagen;
+    }
+
+    public function setIdImagen(int $id_imagen): self
+    {
+        $this->id_imagen = $id_imagen;
 
         return $this;
     }

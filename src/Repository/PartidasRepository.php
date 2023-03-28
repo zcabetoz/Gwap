@@ -66,9 +66,9 @@ class PartidasRepository extends ServiceEntityRepository
     {
         return $this->getEntityManager()
             ->createQuery('
-               SELECT imagen.id 
+               SELECT imagen.id, partidas.imagenId_2, partidas.imagenId_3 
                FROM App:Partidas partidas
-               JOIN partidas.imagenesId imagen
+               JOIN partidas.imagenId_1 imagen
                WHERE partidas.sala = :id
             ')
             ->setParameter('id', $idSala)

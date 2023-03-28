@@ -28,7 +28,7 @@ class Partidas
      * @ORM\ManyToOne(targetEntity=Imagenes::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $imagenesId;
+    private $imagenId_1;
 
     /**
      * @ORM\Column(type="integer")
@@ -40,12 +40,23 @@ class Partidas
      */
     private $contador_salas;
 
-    public function __construct($sala = null, $contador_salas = null)
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $imagenId_2;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $imagenId_3;
+
+    public function __construct($sala = null, $contador_salas = null, $imagenId_2 = null, $imagenId_3 = null)
     {
         $this->sala = $sala;
         $this->contador_salas = $contador_salas;
+        $this->imagenId_2 = $imagenId_2;
+        $this->imagenId_3 = $imagenId_3;
     }
-
 
     public function getId(): ?int
     {
@@ -64,14 +75,14 @@ class Partidas
         return $this;
     }
 
-    public function getImagenesId(): ?Imagenes
+    public function getImagenId1(): ?Imagenes
     {
-        return $this->imagenesId;
+        return $this->imagenId_1;
     }
 
-    public function setImagenesId(?Imagenes $imagenesId): self
+    public function setImagenId1(?Imagenes $imagenId_1): self
     {
-        $this->imagenesId = $imagenesId;
+        $this->imagenId_1 = $imagenId_1;
 
         return $this;
     }
@@ -96,6 +107,30 @@ class Partidas
     public function setContadorSalas(int $contador_salas): self
     {
         $this->contador_salas = $contador_salas;
+
+        return $this;
+    }
+
+    public function getImagenId2(): ?int
+    {
+        return $this->imagenId_2;
+    }
+
+    public function setImagenId2(int $imagenId_2): self
+    {
+        $this->imagenId_2 = $imagenId_2;
+
+        return $this;
+    }
+
+    public function getImagenId3(): ?int
+    {
+        return $this->imagenId_3;
+    }
+
+    public function setImagenId3(int $imagenId_3): self
+    {
+        $this->imagenId_3 = $imagenId_3;
 
         return $this;
     }

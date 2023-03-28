@@ -79,20 +79,24 @@ class DashboardController extends AbstractController
      */
     public function crearPartidaAction()
     {
+        $arrayImagenes = [];
+        $i=0;
         $jugando = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
         $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
         $contador = empty($contadorSalas) ? 0 : $contadorSalas[0]['contador_salas'];
         if (!$jugando) {
             $cantidadImagenes = $this->em->getRepository(Imagenes::class)->findAll();
-
-            $imagenAleatoria = rand(1, count($cantidadImagenes));
-            $imagenId = $this->em->getRepository(Imagenes::class)->find($imagenAleatoria);
-            $partidas = new Partidas($contador + 1, $contador+1);
+            while($i<3){
+                $imagenAleatoria = rand(1, count($cantidadImagenes));
+                $arrayImagenes[$i] = $imagenAleatoria;
+                $i++;
+            }
+            $imagenId = $this->em->getRepository(Imagenes::class)->find($arrayImagenes[0]);
+            $partidas = new Partidas($contador + 1, $contador+1, $arrayImagenes[1], $arrayImagenes[2]);
             $partidas->setUsuarioId($this->getUser());
-            $partidas->setImagenesId($imagenId);
+            $partidas->setImagenId1($imagenId);
             $this->em->persist($partidas);
             $this->em->flush();
-
         } else {
             $this->addFlash(
                 'notice',

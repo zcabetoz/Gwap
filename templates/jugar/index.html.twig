@@ -3,16 +3,36 @@
 {% block title %}Inicio Partida | {{ parent() }}{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <div class="container-fluid">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" id="dom-del-juego">
             <div class="col-md-4 mt-4 text-center">
-                <div class="card-header" id="descripcion-palabra">
-                    <h1>{{ url.0.descripcion | capitalize }}</h1>
+                <div id="div-imagenes-de-juego">
+                    <div>
+                        <h1><span id="descripcion-palabra">{{ urlImagen1.0.descripcion | capitalize }}</span></h1>
+                    </div>
+                    <div id="divImagen">
+                        <img id="imagenJuego" src="{{ asset(urlImagen1.0.imagenUrl) }} "
+                             style="width: 100%;height: 100%">
+                    </div>
+                    <div id="imagen-de-espera">
+                        <h1 id="header-espera">GWAP</h1>
+                        <ul id="lista-previa-inicio-partida">
+                            <li class="lista-espera">El juego Inicia cuando haya 3 jugadores</li>
+                            <li class="lista-espera"> Recuerde enviar una palabra a la vez</li>
+                            <li class="lista-espera"> Puede usar la tecla ENTER o dar clic al boton enviar para enviar
+                                la palabra
+                            </li>
+                            <li class="lista-espera">Si sale de la partida no podras unirte nuevamente y tampoco podras
+                                unirte a otras
+                                partidas
+                            </li>
+                            <li class="lista-espera">No podras crear una partida nueva hasta que esta partida haya
+                                concluido
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="card-body" id="divImagen">
-                    <img src="{{ asset(url.0.imagenUrl) }}" style="height: 80%;width: 80%">
-                </div>
-
                 <h2 class="mt-5">Palabras Relacionadas</h2>
                 <ul id="lista de palabras">
 
@@ -37,53 +57,79 @@
                 </div>
             </div>
         </div>
+        <div id="final-partida">
+            <h1>El juego a concluido</h1>
+            <a href="#" class="btn btn-primary">Ir a estadisticas</a>
+        </div>
     </div>
 
     <script type="text/javascript">
+        let control = 0
+        let totalTime = 10
+        var idImagen = '{{ idImagenes.0.id }}'
+        $('#btn-palabras').attr('disabled', 'disabled')
+        $('#palabraRelacionada').attr('disabled', 'disabled')
+        $('#descripcion-palabra').hide()
+        $('#divImagen').hide()
+        $('#final-partida').hide()
 
         window.onload = numeroUsuarios;
+
         function numeroUsuarios() {
             var ruta = Routing.generate('app_contador_usuarios')
             var idSala = '{{ sala }}'
             $.ajax({
                 type: 'POST',
                 url: ruta,
-                data: ({idSala: idSala }),
+                data: ({idSala: idSala}),
                 async: true,
                 dataType: "json",
                 success: function (data) {
                     console.log(data['sala'])
-                    if(data['sala'] <3){
-                        setTimeout("numeroUsuarios()",5000)
-                        $('#btn-palabras').attr('disabled', 'disabled')
-                        $('#palabraRelacionada').attr('disabled', 'disabled')
-                    }else{
-                        mensaje()
+                    if (data['sala'] < 3) {
+                        setTimeout("numeroUsuarios()", 1000)
+                    } else {
                         $('#btn-palabras').removeAttr('disabled')
                         $('#palabraRelacionada').removeAttr('disabled')
+                        $('#descripcion-palabra').show('slow')
+                        $('#divImagen').show('slow')
+                        $('#imagen-de-espera').hide()
+                        updateClock()
                     }
                 }
             })
-
         }
-        function mensaje(){
-            alert('va a comenzar el juego')
+//&& control < 3
+        function updateClock() {
+            $("#cronometro").text(totalTime)
+            if (totalTime === 0 ) {
+                $('#descripcion-palabra').text('{{ urlImagen2.0.descripcion | capitalize }}')
+                $("#imagenJuego").attr("src", "{{ asset(urlImagen2.0.imagenUrl) }}");
+                idImagen = {{ idImagenes.0.imagenId_2 }}
+                totalTime = 10
+                control++
+                console.log(control)
+                updateClock()
+                if (control === 2) {
+                    $('#descripcion-palabra').text('{{ urlImagen3.0.descripcion | capitalize }}')
+                    $("#imagenJuego").attr("src", "{{ asset(urlImagen3.0.imagenUrl) }}");
+                    idImagen = {{ idImagenes.0.imagenId_3 }}
+                }
+            }else if(control===3){
+                $('#dom-del-juego').hide()
+                $('#final-partida').show('slow')
+                // $('#descripcion-palabra').hide()
+                // $('#divImagen').hide()
+                // $('#resultados-parciales').hide()
+            } else {
+                // if (control < 3) {
+                    totalTime -= 1;
+                    setTimeout("updateClock()", 1000);
+                // }
+
+            }
         }
 
-        // window.onload = updateClock;
-        // var divImagen = $('#divImagen').hide()
-        // var totalTime = 60;
-        // function updateClock() {
-        //     document.getElementById('cronometro').innerHTML = totalTime;
-        //     if(totalTime==0){
-        //         divImagen.show('slow')
-        //         // totalTime = 60
-        //         // updateClock()
-        //     }else{
-        //         totalTime-=1;
-        //         setTimeout("updateClock()",1000);
-        //     }
-        // }
 
         $(document).ready(function () {
             tempo();
@@ -91,9 +137,9 @@
 
         function tempo() {
             $("#resultados-parciales").load(
-                Routing.generate('app_resultados_parciales')
+                Routing.generate('app_resultados_parciales', {id: idImagen})
             )
-            setTimeout(tempo, 1000);
+            setTimeout(tempo, 500);
         }
 
         $("#enviarPalabras").submit(function (e) {
@@ -101,7 +147,6 @@
             var data = {}
             var ruta = Routing.generate("app_guardar_palabras")
             var palabraRelacionada = document.getElementById("palabraRelacionada").value
-            var idImagen = '{{ idImagen.0.id }}'
             data.idImagen = idImagen
             $.ajax({
                 type: 'POST',

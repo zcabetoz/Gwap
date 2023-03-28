@@ -32,8 +32,8 @@ class JugarController extends AbstractController
     public function index(Request $request, $sala = null): Response
     {
         $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
-        $partida = new Partidas($sala, $contadorSalas[0]['contador_salas']);
         $idImagen = $this->em->getRepository(Partidas::class)->findImagen($sala);
+        $partida = new Partidas($sala, $contadorSalas[0]['contador_salas'], $idImagen[0]['imagenId_2'], $idImagen[0]['imagenId_3']);
         $get = $request->query->all();
 
         if (isset($get['idJugador'])) {
@@ -42,17 +42,22 @@ class JugarController extends AbstractController
                 $jugador = $this->em->getRepository(User::class)->find($get['idJugador']);
                 $imagen = $this->em->getRepository(Imagenes::class)->find($idImagen[0]['id']);
                 $partida->setUsuarioId($jugador);
-                $partida->setImagenesId($imagen);
+                $partida->setImagenId1($imagen);
                 $this->em->persist($partida);
                 $this->em->flush();
             }
         }
-        $urlImagen = $this->em->getRepository(Imagenes::class)->findUrlImagen($idImagen);
+        $urlImagen_1 = $this->em->getRepository(Imagenes::class)->findUrlImagen($idImagen[0]['id']);
+        $urlImagen_2 = $this->em->getRepository(Imagenes::class)->findUrlImagen($idImagen[0]['imagenId_2']);
+        $urlImagen_3 = $this->em->getRepository(Imagenes::class)->findUrlImagen($idImagen[0]['imagenId_3']);
+
         return $this->render('jugar/index.html.twig', [
             'sala' => $sala,
-            'url' => $urlImagen,
+            'urlImagen1' => $urlImagen_1,
+            'urlImagen2' => $urlImagen_2,
+            'urlImagen3' => $urlImagen_3,
             'palabrasUsuario'=>[],
-            'idImagen'=>$idImagen
+            'idImagenes'=>$idImagen
         ]);
     }
 
@@ -73,7 +78,7 @@ class JugarController extends AbstractController
             $palabraCorrecta = $this->em->getRepository(Palabra::class)->findByPalabraCorrecta($palabraForm, $idImagen);
             if ($request->isXmlHttpRequest()) {
                 $resultado = $palabraCorrecta ? 'CORRECTO' : 'INCORRECTO';
-                $palabraRelacionada = new UsuarioPalabras($palabraForm, $resultado);
+                $palabraRelacionada = new UsuarioPalabras($palabraForm, $resultado, $idImagen);
                 $palabraRelacionada->setIdUsuario($usuario);
                 $this->em->persist($palabraRelacionada);
                 $this->em->flush();
@@ -85,11 +90,11 @@ class JugarController extends AbstractController
     }
 
     /**
-     *@Route("/resultados-parciales", name="app_resultados_parciales", options={"expose"= true})
+     *@Route("/resultados-parciales/{id}", name="app_resultados_parciales", options={"expose"= true})
      */
-    public function resultadosParcialesIndex(){
+    public function resultadosParcialesAction($id){
         $usuario = $this->getUser()->getId();
-        $palabrasUsuario = $this->em->getRepository(UsuarioPalabras::class)->findPalabras($usuario);
+        $palabrasUsuario = $this->em->getRepository(UsuarioPalabras::class)->findPalabras($usuario, $id);
         return $this->render('jugar/resultadosParciales.html.twig',[
             'palabrasUsuario'=>$palabrasUsuario
         ]);
@@ -98,11 +103,9 @@ class JugarController extends AbstractController
     /**
      *@Route("/contador-usuarios", name="app_contador_usuarios", options={"expose" = true})
      */
-    public function contadorUsuarios(Request $request){
+    public function contadorUsuariosaAction(Request $request){
         $idSala = $request->request->get('idSala');
         $jugadoresSala = $this->em->getRepository(Partidas::class)->findUsuariosSalas($idSala);
-
         return new JsonResponse(['sala'=>count($jugadoresSala)]);
-
     }
 }

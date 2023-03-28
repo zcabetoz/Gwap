@@ -39,14 +39,15 @@ class UsuarioPalabrasRepository extends ServiceEntityRepository
         }
     }
 
-    public function findPalabras($idUsuario){
+    public function findPalabras($idUsuario, $idImagen){
         return $this->getEntityManager()
             ->createQuery('
                 SELECT palabras.palabras_relacionadas, palabras.resultado_palabra
                 FROM App:UsuarioPalabras palabras
-                WHERE palabras.id_usuario = :id
+                WHERE palabras.id_usuario = :id AND palabras.id_imagen = :idImagen
             ')
             ->setParameter('id',$idUsuario)
+            ->setParameter('idImagen', $idImagen)
             ->getResult();
     }
 
