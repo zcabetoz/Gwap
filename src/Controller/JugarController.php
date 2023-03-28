@@ -94,4 +94,15 @@ class JugarController extends AbstractController
             'palabrasUsuario'=>$palabrasUsuario
         ]);
     }
+
+    /**
+     *@Route("/contador-usuarios", name="app_contador_usuarios", options={"expose" = true})
+     */
+    public function contadorUsuarios(Request $request){
+        $idSala = $request->request->get('idSala');
+        $jugadoresSala = $this->em->getRepository(Partidas::class)->findUsuariosSalas($idSala);
+
+        return new JsonResponse(['sala'=>count($jugadoresSala)]);
+
+    }
 }

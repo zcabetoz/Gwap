@@ -20,7 +20,7 @@
                 <form method="post" id="enviarPalabras">
                     <label for="respuesta" class="form-label float-start"> <strong>Ingresar Palabras</strong></label>
                     <input id="palabraRelacionada" type="text" name="respuesta" class="form-control" autofocus required>
-                    <button type="submit" class="input-group-text btn btn-primary mt-3"> Enviar
+                    <button type="submit" class="input-group-text btn btn-primary mt-3" id="btn-palabras"> Enviar
                     </button>
                 </form>
                 <div>
@@ -41,21 +41,49 @@
 
     <script type="text/javascript">
 
-        window.onload = updateClock;
-        var divImagen = $('#divImagen').hide()
-        var totalTime = 60;
-        function updateClock() {
-            document.getElementById('cronometro').innerHTML = totalTime;
-            if(totalTime==0){
-                divImagen.show('slow')
-                // totalTime = 60
-                // updateClock()
-            }else{
-                totalTime-=1;
-                setTimeout("updateClock()",1000);
-            }
+        window.onload = numeroUsuarios;
+        function numeroUsuarios() {
+            var ruta = Routing.generate('app_contador_usuarios')
+            var idSala = '{{ sala }}'
+            $.ajax({
+                type: 'POST',
+                url: ruta,
+                data: ({idSala: idSala }),
+                async: true,
+                dataType: "json",
+                success: function (data) {
+                    console.log(data['sala'])
+                    if(data['sala'] <3){
+                        setTimeout("numeroUsuarios()",5000)
+                        $('#btn-palabras').attr('disabled', 'disabled')
+                        $('#palabraRelacionada').attr('disabled', 'disabled')
+                    }else{
+                        mensaje()
+                        $('#btn-palabras').removeAttr('disabled')
+                        $('#palabraRelacionada').removeAttr('disabled')
+                    }
+                }
+            })
+
+        }
+        function mensaje(){
+            alert('va a comenzar el juego')
         }
 
+        // window.onload = updateClock;
+        // var divImagen = $('#divImagen').hide()
+        // var totalTime = 60;
+        // function updateClock() {
+        //     document.getElementById('cronometro').innerHTML = totalTime;
+        //     if(totalTime==0){
+        //         divImagen.show('slow')
+        //         // totalTime = 60
+        //         // updateClock()
+        //     }else{
+        //         totalTime-=1;
+        //         setTimeout("updateClock()",1000);
+        //     }
+        // }
 
         $(document).ready(function () {
             tempo();
@@ -68,7 +96,6 @@
             setTimeout(tempo, 1000);
         }
 
-
         $("#enviarPalabras").submit(function (e) {
             e.preventDefault()
             var data = {}
@@ -76,7 +103,7 @@
             var palabraRelacionada = document.getElementById("palabraRelacionada").value
             var idImagen = '{{ idImagen.0.id }}'
             data.idImagen = idImagen
-                $.ajax({
+            $.ajax({
                 type: 'POST',
                 url: ruta += '?' + $.param(data),
                 data: ({palabra: palabraRelacionada}),
@@ -89,9 +116,4 @@
             });
         });
     </script>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
 {% endblock %}

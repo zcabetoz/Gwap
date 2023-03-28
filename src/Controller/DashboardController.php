@@ -84,6 +84,7 @@ class DashboardController extends AbstractController
         $contador = empty($contadorSalas) ? 0 : $contadorSalas[0]['contador_salas'];
         if (!$jugando) {
             $cantidadImagenes = $this->em->getRepository(Imagenes::class)->findAll();
+
             $imagenAleatoria = rand(1, count($cantidadImagenes));
             $imagenId = $this->em->getRepository(Imagenes::class)->find($imagenAleatoria);
             $partidas = new Partidas($contador + 1, $contador+1);
