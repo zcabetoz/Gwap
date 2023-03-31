@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Estadisticas | {{ parent() }} {% endblock %}
+
+{% block body %}
+    {% for  control, usuarios in estadisticas %}
+        <h1>{{ usuarios.username }}</h1>
+        {% if control == 0 %}
+            {% for palabras in jugador_1 %}
+                <li> {{ palabras.palabras_relacionadas }}</li>
+            {% endfor %}
+
+        {% elseif control == 1 %}
+            {% for palabras in jugador_2 %}
+                <li> {{ palabras.palabras_relacionadas }} </li>
+            {% endfor %}
+
+        {% elseif control == 2 %}
+            {% for palabras in jugador_3 %}
+                <li> {{ palabras.palabras_relacionadas }} </li>
+            {% endfor %}
+        {% endif %}
+
+    {% endfor %}
+    <a href="{{ path('app_dashboard') }}"><h1 class="bg-white">Ir a menu principal</h1></a>
+{% endblock %}

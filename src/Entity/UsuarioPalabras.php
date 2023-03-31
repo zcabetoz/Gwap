@@ -38,7 +38,7 @@ class UsuarioPalabras
      */
     private $id_imagen;
 
-    public function __construct($palabras_relacionadas=null, $resultado_palabra = null, $id_imagen)
+    public function __construct($palabras_relacionadas=null, $resultado_palabra = null, $id_imagen = null)
     {
         $this->palabras_relacionadas = $palabras_relacionadas;
         $this->resultado_palabra = $resultado_palabra;

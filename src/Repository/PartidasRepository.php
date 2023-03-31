@@ -101,6 +101,15 @@ class PartidasRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getResult();
     }
+    public function findJugadores(){
+        return $this->getEntityManager()
+        ->createQuery('
+                SELECT usuario.id, usuario.username
+                FROM App:Partidas partidas
+                JOIN partidas.usuarioId usuario
+            ')
+            ->getResult();
+    }
 
 //    /**
 //     * @return Partidas[] Returns an array of Partidas objects

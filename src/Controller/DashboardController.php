@@ -4,9 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Imagenes;
 use App\Entity\Partidas;
-use App\Entity\User;
-use App\Repository\PartidasRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,6 +42,7 @@ class DashboardController extends AbstractController
      */
     public function mostrarSalasAction(): Response
     {
+        $numeroJugadores = 0;
         $user = $this->getUser();
         $partidas = $this->em->getRepository(Partidas::class)->findBySala();
         $salas = [];
@@ -56,6 +54,7 @@ class DashboardController extends AbstractController
         $data = [];
         foreach ($salas as $salaId) {
             $jugadoresSala = $this->em->getRepository(Partidas::class)->findUsuariosSalas($salaId['sala']);
+            $numeroJugadores = count($jugadoresSala);
             $users = '';
             foreach ($jugadoresSala as $jugador) {
                 $users .= $jugador['username'] . ', ';
@@ -71,6 +70,7 @@ class DashboardController extends AbstractController
             'data' => $data,
             'salaJugador' => $salaJugador,
             'usuario' => $user,
+            'numeroJugadores'=>$numeroJugadores
         ]);
     }
 

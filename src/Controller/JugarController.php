@@ -29,7 +29,7 @@ class JugarController extends AbstractController
     /**
      * @Route("/jugar/{sala}", name="app_jugar")
      */
-    public function index(Request $request, $sala = null): Response
+    public function inicioPartidaAction(Request $request, $sala = null): Response
     {
         $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
         $idImagen = $this->em->getRepository(Partidas::class)->findImagen($sala);
@@ -60,7 +60,6 @@ class JugarController extends AbstractController
             'idImagenes'=>$idImagen
         ]);
     }
-
     /**
      * @Route("/guardar-palabras",name="app_guardar_palabras", options={"expose"=true})
      */

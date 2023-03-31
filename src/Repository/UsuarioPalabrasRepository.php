@@ -64,6 +64,26 @@ class UsuarioPalabrasRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findJugadores(){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT DISTINCT usuario.username, usuario.id
+                FROM App:UsuarioPalabras palabras
+                JOIN palabras.id_usuario usuario
+            ')
+            ->getResult();
+    }
+    public function findPalabrasJugador($idJugador){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT palabras.palabras_relacionadas
+                FROM App:UsuarioPalabras palabras
+                WHERE palabras.id_usuario = :id 
+            ')
+            ->setParameter('id', $idJugador)
+            ->getResult();
+    }
+
 //    /**
 //     * @return UsuarioPalabras[] Returns an array of UsuarioPalabras objects
 //     */

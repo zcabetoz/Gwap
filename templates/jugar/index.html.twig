@@ -58,8 +58,8 @@
             </div>
         </div>
         <div id="final-partida">
-            <h1>El juego a concluido</h1>
-            <a href="#" class="btn btn-primary">Ir a estadisticas</a>
+            <h1>El juego ha concluido</h1>
+            <a href="{{ path('app_estadisticas_partida') }}" class="btn btn-primary">Ir a estadisticas</a>
         </div>
     </div>
 
@@ -99,7 +99,6 @@
                 }
             })
         }
-//&& control < 3
         function updateClock() {
             $("#cronometro").text(totalTime)
             if (totalTime === 0 ) {
@@ -118,18 +117,14 @@
             }else if(control===3){
                 $('#dom-del-juego').hide()
                 $('#final-partida').show('slow')
-                // $('#descripcion-palabra').hide()
-                // $('#divImagen').hide()
-                // $('#resultados-parciales').hide()
             } else {
-                // if (control < 3) {
+                if(control<3){
                     totalTime -= 1;
                     setTimeout("updateClock()", 1000);
-                // }
+                }
 
             }
         }
-
 
         $(document).ready(function () {
             tempo();
