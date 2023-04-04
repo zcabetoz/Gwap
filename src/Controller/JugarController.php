@@ -8,6 +8,7 @@ use App\Entity\Partidas;
 use App\Entity\User;
 use App\Entity\UsuarioPalabras;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +32,7 @@ class JugarController extends AbstractController
      */
     public function inicioPartidaAction(Request $request, $sala = null): Response
     {
+        $i=0;
         $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
         $idImagen = $this->em->getRepository(Partidas::class)->findImagen($sala);
         $partida = new Partidas($sala, $contadorSalas[0]['contador_salas'], $idImagen[0]['imagenId_2'], $idImagen[0]['imagenId_3'],1);
@@ -41,6 +43,8 @@ class JugarController extends AbstractController
             $jugando = $this->em->getRepository(Partidas::class)->findJugando($get['idJugador']);
             if (!$jugando) {
                 if($numero_jugadores[0]['contador_jugadores']===2){
+                    $salasNoDisponibles = $this->em->getRepository(Partidas::class)->findBySalaLlena($sala);
+                    $this->cambiarestados($salasNoDisponibles);
                     $partida->setEstadoPartida(0);
                 }
                 $jugador = $this->em->getRepository(User::class)->find($get['idJugador']);
@@ -66,6 +70,15 @@ class JugarController extends AbstractController
             'idImagenes'=>$idImagen
         ]);
     }
+
+    private function cambiarestados($salasNoDisponibles){
+        $estadoSala1 = $this->em->getRepository(Partidas::class)->find($salasNoDisponibles[0]['id']);
+        $estadoSala1->setEstadoPartida(0);
+        $estadoSala2 = $this->em->getRepository(Partidas::class)->find($salasNoDisponibles[1]['id']);
+        $estadoSala2->setEstadoPartida(0);
+
+    }
+
     /**
      * @Route("/guardar-palabras",name="app_guardar_palabras", options={"expose"=true})
      */

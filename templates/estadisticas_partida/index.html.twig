@@ -3,7 +3,7 @@
 {% block title %}Estadisticas | {{ parent() }} {% endblock %}
 
 {% block body %}
-    {% for  control, usuarios in estadisticas %}
+    {% for  control, usuarios in jugadores %}
         <h1>{{ usuarios.username }}</h1>
         {% if control == 0 %}
             {% for palabras in jugador_1 %}
@@ -20,7 +20,6 @@
                 <li> {{ palabras.palabras_relacionadas }} </li>
             {% endfor %}
         {% endif %}
-
     {% endfor %}
     <a href="{{ path('app_dashboard') }}"><h1 class="bg-white">Ir a menu principal</h1></a>
 {% endblock %}

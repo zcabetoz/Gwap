@@ -23,18 +23,24 @@ class EstadisticasPartidaController extends AbstractController
     }
 
     /**
-     * @Route("/estadisticas/partida", name="app_estadisticas_partida")
+     * @Route("/estadisticas/partida/{idSala}", name="app_estadisticas_partida")
      */
-    public function estadisticasPartidaAction(): Response
+    public function estadisticasPartidaAction($idSala): Response
     {
-        $jugadores = $this->em->getRepository(Partidas::class)->findJugadores();
+        $idUsuario = $this->getUser()->getId();
+        $partidaJugador = $this->em->getRepository(Partidas::class)->findByIdSalaJugador($idUsuario);
+//        $eliminarPartidaJugador = $this->em->getRepository(Partidas::class)->find($partidaJugador[0]['id']);
+
+//        $this->em->remove($eliminarPartidaJugador);
+//        $this->em->flush();
+        $jugadores = $this->em->getRepository(Partidas::class)->findJugadores($idSala);
         $palabrasJugador_1 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[0]['id']);
         $palabrasJugador_2 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[1]['id']);
         $palabrasJugador_3 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[2]['id']);
 
 
         return $this->render('estadisticas_partida/index.html.twig', [
-            'estadisticas' => $jugadores,
+            'jugadores' => $jugadores,
             'jugador_1' => $palabrasJugador_1,
             'jugador_2' => $palabrasJugador_2,
             'jugador_3' => $palabrasJugador_3

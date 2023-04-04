@@ -127,16 +127,39 @@ class PartidasRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getResult();
     }
-    public function findJugadores(){
+    public function findJugadores($sala){
         return $this->getEntityManager()
         ->createQuery('
                 SELECT usuario.id, usuario.username
                 FROM App:Partidas partidas
                 JOIN partidas.usuarioId usuario
+                WHERE partidas.sala = :idSala
             ')
+            ->setParameter('idSala', $sala)
             ->getResult();
     }
 
+    public function findByIdSalaJugador($idUsuario){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT partidas.id
+                FROM App:Partidas partidas
+                WHERE partidas.usuarioId = :id
+            ')
+            ->setParameter('id',$idUsuario)
+            ->getResult();
+    }
+
+    public function findBySalaLlena($sala){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT partidas.id
+                FROM App:Partidas partidas
+                WHERE partidas.sala = :idSala
+            ')
+            ->setParameter('idSala', $sala)
+            ->getResult();
+    }
 //    /**
 //     * @return Partidas[] Returns an array of Partidas objects
 //     */

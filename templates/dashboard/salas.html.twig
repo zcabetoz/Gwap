@@ -19,7 +19,7 @@
                     </td>
                     <td>
                         {% if (data.estadoSala.0.estado_partida is same as(0)) %}
-                            <h5>Sala LLena</h5>
+                            <span id="no-disponible" style="color: darkred">No disponible</span>
                         {% else %}
                             {% if(salaJugador is empty) %}
                                 <a href="{{ path('app_jugar', {sala : data.sala.sala, idJugador : usuario.getId()}) }}"
@@ -40,6 +40,5 @@
             </tbody>
         </table>
     </div>
-
 {% endblock %}
 
