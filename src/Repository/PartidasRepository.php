@@ -39,6 +39,19 @@ class PartidasRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByEstadoPartida($sala){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT partidas.estado_partida
+                FROM App:Partidas partidas
+                WHERE partidas.sala = :idSala
+                ORDER BY partidas.estado_partida ASC 
+            ')
+            ->setParameter('idSala', $sala)
+            ->setMaxResults(1)
+            ->getResult();
+    }
+
     public function findBySala()
     {
         return $this->getEntityManager()
@@ -62,6 +75,19 @@ class PartidasRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findNumeroJugadores($sala){
+        return $this->getEntityManager()
+            ->createQuery('
+             SELECT partidas.contador_jugadores
+             FROM App:Partidas partidas
+             WHERE partidas.sala = :idSala
+             ORDER BY partidas.contador_jugadores DESC 
+            ')
+            ->setParameter('idSala', $sala)
+            ->setMaxResults(1)
+            ->getResult();
+
+    }
     public function findImagen($idSala)
     {
         return $this->getEntityManager()

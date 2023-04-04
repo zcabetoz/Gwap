@@ -33,18 +33,24 @@ class JugarController extends AbstractController
     {
         $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
         $idImagen = $this->em->getRepository(Partidas::class)->findImagen($sala);
-        $partida = new Partidas($sala, $contadorSalas[0]['contador_salas'], $idImagen[0]['imagenId_2'], $idImagen[0]['imagenId_3']);
+        $partida = new Partidas($sala, $contadorSalas[0]['contador_salas'], $idImagen[0]['imagenId_2'], $idImagen[0]['imagenId_3'],1);
         $get = $request->query->all();
 
         if (isset($get['idJugador'])) {
+            $numero_jugadores = $this->em->getRepository(Partidas::class)->findNumeroJugadores($sala);
             $jugando = $this->em->getRepository(Partidas::class)->findJugando($get['idJugador']);
             if (!$jugando) {
+                if($numero_jugadores[0]['contador_jugadores']===2){
+                    $partida->setEstadoPartida(0);
+                }
                 $jugador = $this->em->getRepository(User::class)->find($get['idJugador']);
                 $imagen = $this->em->getRepository(Imagenes::class)->find($idImagen[0]['id']);
                 $partida->setUsuarioId($jugador);
                 $partida->setImagenId1($imagen);
+                $partida->setContadorJugadores($numero_jugadores[0]['contador_jugadores']+1);
                 $this->em->persist($partida);
                 $this->em->flush();
+
             }
         }
         $urlImagen_1 = $this->em->getRepository(Imagenes::class)->findUrlImagen($idImagen[0]['id']);

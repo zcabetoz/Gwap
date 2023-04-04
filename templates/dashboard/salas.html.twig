@@ -18,7 +18,7 @@
                         {{ data.users | lower }}
                     </td>
                     <td>
-                        {% if (numeroJugadores == 3) %}
+                        {% if (data.estadoSala.0.estado_partida is same as(0)) %}
                             <h5>Sala LLena</h5>
                         {% else %}
                             {% if(salaJugador is empty) %}
@@ -40,4 +40,6 @@
             </tbody>
         </table>
     </div>
+
 {% endblock %}
+

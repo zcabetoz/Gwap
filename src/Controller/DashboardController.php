@@ -34,6 +34,7 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/index.html.twig', [
             'usuario' => $user,
             'data' =>[],
+            'estadoPartida'=>[]
         ]);
     }
 
@@ -42,7 +43,8 @@ class DashboardController extends AbstractController
      */
     public function mostrarSalasAction(): Response
     {
-        $numeroJugadores = 0;
+        $estadoPartida = [];
+        $i = 0;
         $user = $this->getUser();
         $partidas = $this->em->getRepository(Partidas::class)->findBySala();
         $salas = [];
@@ -52,25 +54,29 @@ class DashboardController extends AbstractController
             }
         }
         $data = [];
+
         foreach ($salas as $salaId) {
+            $estadoPartida[$i] = $this->em->getRepository(Partidas::class)->findByEstadoPartida($salas[$i]['sala']);
             $jugadoresSala = $this->em->getRepository(Partidas::class)->findUsuariosSalas($salaId['sala']);
-            $numeroJugadores = count($jugadoresSala);
             $users = '';
             foreach ($jugadoresSala as $jugador) {
                 $users .= $jugador['username'] . ', ';
             }
             $data[] = [
                 'sala' => $salaId,
-                'users' => $users
+                'users' => $users,
+                'estadoSala'=>$estadoPartida[$i]
             ];
+            $i++;
         }
+        $numeroJugadores = empty($jugadoresSala) ? 0 : count($jugadoresSala);
         $salaJugador = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
-
         return $this->render('dashboard/salas.html.twig', [
             'data' => $data,
             'salaJugador' => $salaJugador,
             'usuario' => $user,
-            'numeroJugadores'=>$numeroJugadores
+            'numeroJugadores'=>$numeroJugadores,
+            'estadoPartida'=>$estadoPartida
         ]);
     }
 
@@ -92,7 +98,7 @@ class DashboardController extends AbstractController
                 $i++;
             }
             $imagenId = $this->em->getRepository(Imagenes::class)->find($arrayImagenes[0]);
-            $partidas = new Partidas($contador + 1, $contador+1, $arrayImagenes[1], $arrayImagenes[2]);
+            $partidas = new Partidas($contador + 1, $contador+1, $arrayImagenes[1], $arrayImagenes[2], 1, 1);
             $partidas->setUsuarioId($this->getUser());
             $partidas->setImagenId1($imagenId);
             $this->em->persist($partidas);

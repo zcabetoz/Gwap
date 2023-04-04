@@ -50,12 +50,24 @@ class Partidas
      */
     private $imagenId_3;
 
-    public function __construct($sala = null, $contador_salas = null, $imagenId_2 = null, $imagenId_3 = null)
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $estado_partida;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $contador_jugadores;
+
+    public function __construct($sala = null, $contador_salas = null, $imagenId_2 = null, $imagenId_3 = null, $estado_partida = null, $contador_jugadores = null)
     {
         $this->sala = $sala;
         $this->contador_salas = $contador_salas;
         $this->imagenId_2 = $imagenId_2;
         $this->imagenId_3 = $imagenId_3;
+        $this->estado_partida = $estado_partida;
+        $this->contador_jugadores = $contador_jugadores;
     }
 
     public function getId(): ?int
@@ -131,6 +143,30 @@ class Partidas
     public function setImagenId3(int $imagenId_3): self
     {
         $this->imagenId_3 = $imagenId_3;
+
+        return $this;
+    }
+
+    public function getEstadoPartida(): ?int
+    {
+        return $this->estado_partida;
+    }
+
+    public function setEstadoPartida(int $estado_partida): self
+    {
+        $this->estado_partida = $estado_partida;
+
+        return $this;
+    }
+
+    public function getContadorJugadores(): ?int
+    {
+        return $this->contador_jugadores;
+    }
+
+    public function setContadorJugadores(int $contador_jugadores): self
+    {
+        $this->contador_jugadores = $contador_jugadores;
 
         return $this;
     }
