@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Estadisticas;
 use App\Entity\Imagenes;
 use App\Entity\Partidas;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -99,9 +101,14 @@ class DashboardController extends AbstractController
             }
             $imagenId = $this->em->getRepository(Imagenes::class)->find($arrayImagenes[0]);
             $partidas = new Partidas($contador + 1, $contador+1, $arrayImagenes[1], $arrayImagenes[2], 1, 1);
+            $estadisiticas = new Estadisticas();
+            $estadisiticas->setUsernameJugador($this->getUser()->getUserIdentifier());
+            $estadisiticas->setIdJugador($this->getUser()->getId());
+            $estadisiticas->setSalaPartida($contador+1);
             $partidas->setUsuarioId($this->getUser());
             $partidas->setImagenId1($imagenId);
             $this->em->persist($partidas);
+            $this->em->persist($estadisiticas);
             $this->em->flush();
         } else {
             $this->addFlash(

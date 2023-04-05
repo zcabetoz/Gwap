@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Estadisticas;
 use App\Entity\Palabra;
 use App\Entity\Partidas;
 use App\Entity\UsuarioPalabras;
@@ -27,16 +28,17 @@ class EstadisticasPartidaController extends AbstractController
      */
     public function estadisticasPartidaAction($idSala): Response
     {
+
+
         $idUsuario = $this->getUser()->getId();
         $partidaJugador = $this->em->getRepository(Partidas::class)->findByIdSalaJugador($idUsuario);
-//        $eliminarPartidaJugador = $this->em->getRepository(Partidas::class)->find($partidaJugador[0]['id']);
-
-//        $this->em->remove($eliminarPartidaJugador);
-//        $this->em->flush();
-        $jugadores = $this->em->getRepository(Partidas::class)->findJugadores($idSala);
-        $palabrasJugador_1 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[0]['id']);
-        $palabrasJugador_2 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[1]['id']);
-        $palabrasJugador_3 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[2]['id']);
+        $eliminarPartidaJugador = $this->em->getRepository(Partidas::class)->find($partidaJugador[0]['id']);
+        $this->em->remove($eliminarPartidaJugador);
+        $this->em->flush();
+        $jugadores = $this->em->getRepository(Estadisticas::class)->findJugadores($idSala);
+        $palabrasJugador_1 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[0]['id_jugador']);
+        $palabrasJugador_2 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[1]['id_jugador']);
+        $palabrasJugador_3 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[2]['id_jugador']);
 
 
         return $this->render('estadisticas_partida/index.html.twig', [

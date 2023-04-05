@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Estadisticas;
 use App\Entity\Imagenes;
 use App\Entity\Palabra;
 use App\Entity\Partidas;
@@ -49,10 +50,15 @@ class JugarController extends AbstractController
                 }
                 $jugador = $this->em->getRepository(User::class)->find($get['idJugador']);
                 $imagen = $this->em->getRepository(Imagenes::class)->find($idImagen[0]['id']);
+                $estadisiticas = new Estadisticas();
+                $estadisiticas->setUsernameJugador($this->getUser()->getUserIdentifier());
+                $estadisiticas->setIdJugador($this->getUser()->getId());
+                $estadisiticas->setSalaPartida($sala);
                 $partida->setUsuarioId($jugador);
                 $partida->setImagenId1($imagen);
                 $partida->setContadorJugadores($numero_jugadores[0]['contador_jugadores']+1);
                 $this->em->persist($partida);
+                $this->em->persist($estadisiticas);
                 $this->em->flush();
 
             }
