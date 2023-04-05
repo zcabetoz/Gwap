@@ -33,7 +33,6 @@ class JugarController extends AbstractController
      */
     public function inicioPartidaAction(Request $request, $sala = null): Response
     {
-        $i=0;
         $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
         $idImagen = $this->em->getRepository(Partidas::class)->findImagen($sala);
         $partida = new Partidas($sala, $contadorSalas[0]['contador_salas'], $idImagen[0]['imagenId_2'], $idImagen[0]['imagenId_3'],1);

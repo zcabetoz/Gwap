@@ -28,8 +28,6 @@ class EstadisticasPartidaController extends AbstractController
      */
     public function estadisticasPartidaAction($idSala): Response
     {
-
-
         $idUsuario = $this->getUser()->getId();
         $partidaJugador = $this->em->getRepository(Partidas::class)->findByIdSalaJugador($idUsuario);
         $eliminarPartidaJugador = $this->em->getRepository(Partidas::class)->find($partidaJugador[0]['id']);
@@ -40,7 +38,6 @@ class EstadisticasPartidaController extends AbstractController
         $palabrasJugador_2 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[1]['id_jugador']);
         $palabrasJugador_3 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[2]['id_jugador']);
 
-
         return $this->render('estadisticas_partida/index.html.twig', [
             'jugadores' => $jugadores,
             'jugador_1' => $palabrasJugador_1,
@@ -48,5 +45,4 @@ class EstadisticasPartidaController extends AbstractController
             'jugador_3' => $palabrasJugador_3
         ]);
     }
-
 }

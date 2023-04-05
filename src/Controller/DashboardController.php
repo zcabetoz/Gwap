@@ -6,7 +6,6 @@ use App\Entity\Estadisticas;
 use App\Entity\Imagenes;
 use App\Entity\Partidas;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -87,11 +86,11 @@ class DashboardController extends AbstractController
      */
     public function crearPartidaAction()
     {
+        $ultimaPartida = $this->em->getRepository(Estadisticas::class)->findUltimaPartida();
+        $contador = empty($ultimaPartida) ? 0 : $ultimaPartida[0]['sala_partida'];
         $arrayImagenes = [];
         $i=0;
         $jugando = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
-        $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
-        $contador = empty($contadorSalas) ? 0 : $contadorSalas[0]['contador_salas'];
         if (!$jugando) {
             $cantidadImagenes = $this->em->getRepository(Imagenes::class)->findAll();
             while($i<3){

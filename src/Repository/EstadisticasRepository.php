@@ -49,6 +49,17 @@ class EstadisticasRepository extends ServiceEntityRepository
             ->setParameter('idSala', $sala)
             ->getResult();
     }
+
+    public function findUltimaPartida(){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT estadisticas.sala_partida
+                FROM App:Estadisticas estadisticas
+                ORDER BY estadisticas.sala_partida DESC 
+            ')
+            ->setMaxResults(1)
+            ->getResult();
+    }
 //    /**
 //     * @return Estadisticas[] Returns an array of Estadisticas objects
 //     */
