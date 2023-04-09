@@ -1,1 +1,35 @@
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '1', 'Pelota'), (NULL, '1', 'guayos'), (NULL, '1', 'brazuca'), (NULL, '1', 'valderrama'), (NULL, '1', 'campeon'), (NULL, '1', 'medalla'), (NULL, '1', 'trofeo'), (NULL, '1', 'argentina'), (NULL, '1', 'brasil'), (NULL, '1', 'eliminatorias'), (NULL, '1', 'seleccion'), (NULL, '1', 'barras'), (NULL, '1', 'estadio'), (NULL, '10', 'grama'), (NULL, '1', 'Gol'), (NULL, '1', 'Arco'), (NULL, '1', 'Cancha'), (NULL, '1', 'Portero'), (NULL, '1', 'Delantero'), (NULL, '1', 'Defensa'), (NULL, '1', 'Mediocampista'), (NULL, '1', 'Árbitro'), (NULL, '1', 'Tarjeta'), (NULL, '1', 'Penalti'), (NULL, '1', 'Mundial'), (NULL, '1', 'Copa'), (NULL, '1', 'Liga'), (NULL, '1', 'Campeonato'), (NULL, '1', 'Club'), (NULL, '1', 'Entrenador'), (NULL, NULL, 'Jugador'), (NULL, NULL, 'Partido'), (NULL, NULL, 'Balón'), (NULL, NULL, 'Cabezazo'), (NULL, NULL, 'Maradona'), (NULL, NULL, 'Pelé'), (NULL, NULL, 'Zinedine '), (NULL, NULL, 'Ronaldo '), (NULL, NULL, 'Ronaldinho'), (NULL, '1', 'tachira');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '1', 'alas'), (NULL, '1', 'despegue'), (NULL, '1', 'pista'), (NULL, '1', 'aereopuerto'), 
+(NULL, '1', 'viaje');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '2', 'messi'), (NULL, '2', 'pele'), (NULL, '2', 'maradona'), (NULL, '2', 'tachira'), 
+(NULL, '2', 'mundial');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '3', 'jordan'), (NULL, '3', 'kobi'), (NULL, '3', 'lebron'), (NULL, '3', 'cesta'), 
+(NULL, '3', 'triple');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '4', 'chocolate'), (NULL, '4', 'cono'), (NULL, '4', 'fresa'), (NULL, '4', 'sabores'), 
+(NULL, '4', 'heladeria');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '5', 'flor'), (NULL, '5', 'girasol'), (NULL, '5', 'tulipan'), (NULL, '5', 'margarita'), 
+(NULL, '5', 'rosa');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '6', 'cuento'), (NULL, '6', 'novela'), (NULL, '6', 'escritor'), (NULL, '6', 'hojas'), 
+(NULL, '6', 'biblioteca');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '7', 'hueso'), (NULL, '7', 'ladrar'), (NULL, '7', 'perrarina'), (NULL, '7', 'leal'), 
+(NULL, '7', 'peludo');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '8', 'queso'), (NULL, '8', 'chorizo'), (NULL, '8', 'salami'), (NULL, '8', 'pepperoni'), 
+(NULL, '8', 'italia');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '9', 'mar'), (NULL, '9', 'arena'), (NULL, '9', 'sal'), (NULL, '9', 'sol'), 
+(NULL, '9', 'palma');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '10', 'tecnologia'), (NULL, '10', 'inteligencia'), (NULL, '10', 'ia'), (NULL, '10', 'algoritmo'), 
+(NULL, '10', 'futuro');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '11', 'teclas'), (NULL, '11', 'numeros'), (NULL, '11', 'letras'), (NULL, '11', 'simbolos'), 
+(NULL, '11', 'flechas');
+
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '12', 'samsung'), (NULL, '12', 'nokia'), (NULL, '12', 'motorola'), (NULL, '12', 'iphone'), 
+(NULL, '12', 'redmi');

@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
 
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
-     * @param $em
+     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
     {
@@ -29,13 +29,15 @@ class DashboardController extends AbstractController
     public function mostrarPartidasAction(): Response
     {
         $user = $this->getUser();
+        $rol = $user->getRoles();
         if (!isset($user)) {
             return $this->redirectToRoute('app_login');
         }
         return $this->render('dashboard/index.html.twig', [
             'usuario' => $user,
             'data' =>[],
-            'estadoPartida'=>[]
+            'estadoPartida'=>[],
+            'rol'=>$rol[0]
         ]);
     }
 
@@ -103,6 +105,7 @@ class DashboardController extends AbstractController
             $estadisiticas = new Estadisticas();
             $estadisiticas->setUsernameJugador($this->getUser()->getUserIdentifier());
             $estadisiticas->setIdJugador($this->getUser()->getId());
+            $estadisiticas->setNombreJugador($this->getUser()->getNombre());
             $estadisiticas->setSalaPartida($contador+1);
             $partidas->setUsuarioId($this->getUser());
             $partidas->setImagenId1($imagenId);

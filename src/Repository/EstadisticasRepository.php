@@ -42,7 +42,7 @@ class EstadisticasRepository extends ServiceEntityRepository
     public function findJugadores($sala){
         return $this->getEntityManager()
             ->createQuery('
-                SELECT estadisticas.id_jugador, estadisticas.username_jugador
+                SELECT estadisticas.id_jugador, estadisticas.nombre_jugador
                 FROM App:Estadisticas estadisticas
                 WHERE estadisticas.sala_partida = :idSala
             ')

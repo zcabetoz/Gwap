@@ -52,6 +52,7 @@ class JugarController extends AbstractController
                 $estadisiticas = new Estadisticas();
                 $estadisiticas->setUsernameJugador($this->getUser()->getUserIdentifier());
                 $estadisiticas->setIdJugador($this->getUser()->getId());
+                $estadisiticas->setNombreJugador($this->getUser()->getNombre());
                 $estadisiticas->setSalaPartida($sala);
                 $partida->setUsuarioId($jugador);
                 $partida->setImagenId1($imagen);
@@ -93,15 +94,16 @@ class JugarController extends AbstractController
         $get =$request->query->all();
         $palabraForm = $request->request->get('palabra');
         $idImagen = $get['idImagen'];
+        $numeroSala = $get['sala'];
         $usuario = $this->getUser();
-        $palabraExiste = $this->em->getRepository(UsuarioPalabras::class)->findByPalabraExiste($palabraForm, $idUsuario);
+        $palabraExiste = $this->em->getRepository(UsuarioPalabras::class)->findByPalabraExiste($palabraForm, $idUsuario, $idImagen, $numeroSala);
         if($palabraExiste){
             return new JsonResponse(['palabra'=>'existe', 'imagen'=>$idImagen]);
         }else{
             $palabraCorrecta = $this->em->getRepository(Palabra::class)->findByPalabraCorrecta($palabraForm, $idImagen);
             if ($request->isXmlHttpRequest()) {
                 $resultado = $palabraCorrecta ? 'CORRECTO' : 'INCORRECTO';
-                $palabraRelacionada = new UsuarioPalabras($palabraForm, $resultado, $idImagen);
+                $palabraRelacionada = new UsuarioPalabras($palabraForm, $resultado, $idImagen, $numeroSala);
                 $palabraRelacionada->setIdUsuario($usuario);
                 $this->em->persist($palabraRelacionada);
                 $this->em->flush();
@@ -113,11 +115,11 @@ class JugarController extends AbstractController
     }
 
     /**
-     *@Route("/resultados-parciales/{id}", name="app_resultados_parciales", options={"expose"= true})
+     *@Route("/resultados-parciales/jugador/{id}/sala{numSala}", name="app_resultados_parciales", options={"expose"= true})
      */
-    public function resultadosParcialesAction($id){
+    public function resultadosParcialesAction($id,$numSala){
         $usuario = $this->getUser()->getId();
-        $palabrasUsuario = $this->em->getRepository(UsuarioPalabras::class)->findPalabras($usuario, $id);
+        $palabrasUsuario = $this->em->getRepository(UsuarioPalabras::class)->findPalabras($usuario, $id, $numSala);
         return $this->render('jugar/resultadosParciales.html.twig',[
             'palabrasUsuario'=>$palabrasUsuario
         ]);

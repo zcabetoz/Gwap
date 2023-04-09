@@ -39,27 +39,30 @@ class UsuarioPalabrasRepository extends ServiceEntityRepository
         }
     }
 
-    public function findPalabras($idUsuario, $idImagen){
+    public function findPalabras($idUsuario, $idImagen, $numeroSala){
         return $this->getEntityManager()
             ->createQuery('
                 SELECT palabras.palabras_relacionadas, palabras.resultado_palabra
                 FROM App:UsuarioPalabras palabras
-                WHERE palabras.id_usuario = :id AND palabras.id_imagen = :idImagen
+                WHERE palabras.id_usuario = :id AND palabras.id_imagen = :idImagen AND palabras.numero_sala =:numSala
             ')
             ->setParameter('id',$idUsuario)
             ->setParameter('idImagen', $idImagen)
+            ->setParameter('numSala', $numeroSala)
             ->getResult();
     }
 
-    public function findByPalabraExiste($palabraForm, $idUsuario){
+    public function findByPalabraExiste($palabraForm, $idUsuario, $idImagen, $numeroSala){
         return $this->getEntityManager()
             ->createQuery('
                 SELECT palabras.palabras_relacionadas
                 FROM App:UsuarioPalabras palabras
-                WHERE palabras.palabras_relacionadas = :palabra AND palabras.id_usuario = :id
+                WHERE palabras.palabras_relacionadas = :palabra AND palabras.id_usuario = :id AND palabras.id_imagen = :idImagen AND palabras.numero_sala = :numeroSala
             ')
             ->setParameter('palabra', $palabraForm)
             ->setParameter('id', $idUsuario)
+            ->setParameter('idImagen', $idImagen)
+            ->setParameter('numeroSala', $numeroSala)
             ->setMaxResults(1)
             ->getResult();
     }
@@ -73,14 +76,27 @@ class UsuarioPalabrasRepository extends ServiceEntityRepository
             ')
             ->getResult();
     }
-    public function findPalabrasJugador($idJugador){
+    public function findPalabrasJugador($idJugador, $numeroSala){
         return $this->getEntityManager()
             ->createQuery('
-                SELECT palabras.palabras_relacionadas
+                SELECT palabras.palabras_relacionadas, palabras.resultado_palabra, palabras.id_imagen
                 FROM App:UsuarioPalabras palabras
-                WHERE palabras.id_usuario = :id 
+                WHERE palabras.id_usuario = :id AND palabras.numero_sala = :sala
             ')
             ->setParameter('id', $idJugador)
+            ->setParameter('sala', $numeroSala)
+            ->getResult();
+    }
+    public function palabrasCorrectas($idUsuario, $numeroSala){
+        return $this->getEntityManager()
+            ->createQuery('
+            SELECT palabras.palabras_relacionadas
+            FROM App:UsuarioPalabras palabras
+            WHERE palabras.resultado_palabra = :resultado AND palabras.id_usuario = :id AND palabras.numero_sala = :sala
+            ')
+            ->setParameter('resultado','CORRECTO')
+            ->setParameter('id', $idUsuario)
+            ->setParameter('sala', $numeroSala)
             ->getResult();
     }
 

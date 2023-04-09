@@ -55,11 +55,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $fechaNacimiento;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $puntaje_partida;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $puntaje_global;
+
+    /**
      * @param $id
      */
     public function __construct()
     {
         $this->roles = ['ROLE_USER'];
+        $this->puntaje_partida = 0;
+        $this->puntaje_global = 0;
     }
 
     /**
@@ -149,6 +161,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @see UserInterface
+     */
     public function getNombre(): ?string
     {
         return $this->nombre;
@@ -181,6 +196,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFechaNacimiento(string $fechaNacimiento): self
     {
         $this->fechaNacimiento = $fechaNacimiento;
+
+        return $this;
+    }
+
+    public function getPuntajePartida(): ?int
+    {
+        return $this->puntaje_partida;
+    }
+
+    public function setPuntajePartida(int $puntaje_partida): self
+    {
+        $this->puntaje_partida = $puntaje_partida;
+
+        return $this;
+    }
+
+    public function getPuntajeGlobal(): ?int
+    {
+        return $this->puntaje_global;
+    }
+
+    public function setPuntajeGlobal(int $puntaje_global): self
+    {
+        $this->puntaje_global = $puntaje_global;
 
         return $this;
     }

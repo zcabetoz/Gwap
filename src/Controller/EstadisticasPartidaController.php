@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EstadisticasPartidaController extends AbstractController
 {
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
-     * @param $em
+     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
     {
@@ -28,16 +28,65 @@ class EstadisticasPartidaController extends AbstractController
      */
     public function estadisticasPartidaAction($idSala): Response
     {
+        $usuario = $this->getUser();
+        $pc1[] = '';
+        $pc2[] = '';
+        $pc3[] = '';
         $idUsuario = $this->getUser()->getId();
         $partidaJugador = $this->em->getRepository(Partidas::class)->findByIdSalaJugador($idUsuario);
-        $eliminarPartidaJugador = $this->em->getRepository(Partidas::class)->find($partidaJugador[0]['id']);
-        $this->em->remove($eliminarPartidaJugador);
-        $this->em->flush();
-        $jugadores = $this->em->getRepository(Estadisticas::class)->findJugadores($idSala);
-        $palabrasJugador_1 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[0]['id_jugador']);
-        $palabrasJugador_2 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[1]['id_jugador']);
-        $palabrasJugador_3 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[2]['id_jugador']);
 
+
+
+        $jugadores = $this->em->getRepository(Estadisticas::class)->findJugadores($idSala);
+
+        $palabrasCorrectasJ1 = $this->em->getRepository(UsuarioPalabras::class)->palabrasCorrectas($jugadores[0]['id_jugador'], $idSala);
+        for ($i = 0; $i < count($palabrasCorrectasJ1); $i++) {
+            $pc1[$i] = $palabrasCorrectasJ1[$i]['palabras_relacionadas'];
+        }
+        $palabrasCorrectasJ2 = $this->em->getRepository(UsuarioPalabras::class)->palabrasCorrectas($jugadores[1]['id_jugador'], $idSala);
+        for ($i = 0; $i < count($palabrasCorrectasJ2); $i++) {
+            $pc2[$i] = $palabrasCorrectasJ2[$i]['palabras_relacionadas'];
+        }
+        $palabrasCorrectasJ3 = $this->em->getRepository(UsuarioPalabras::class)->palabrasCorrectas($jugadores[2]['id_jugador'], $idSala);
+        for ($i = 0; $i < count($palabrasCorrectasJ3); $i++) {
+            $pc3[$i] = $palabrasCorrectasJ3[$i]['palabras_relacionadas'];
+        }
+       $puntaje200 = array_intersect($pc1, $pc2, $pc3);
+        if(!empty($puntaje200)){
+            if($puntaje200[0] == "" ) {
+                $p200 = 0;
+            }else{
+                    $p200 = count($puntaje200);
+            }
+        }else{
+            $p200 =0;
+        }
+
+        dump($puntaje200);
+        dump($p200);
+        dump(count($palabrasCorrectasJ3));
+        dump(count($palabrasCorrectasJ2));
+        dump(count($palabrasCorrectasJ1));
+
+        $palabrasJugador_1 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[0]['id_jugador'], $idSala);
+        $palabrasJugador_2 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[1]['id_jugador'], $idSala);
+        $palabrasJugador_3 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[2]['id_jugador'], $idSala);
+
+
+        try {
+            $eliminarPartidaJugador = $this->em->getRepository(Partidas::class)->find($partidaJugador[0]['id']);
+            $misPalabrasCorrectas = $this->em->getRepository(UsuarioPalabras::class)->palabrasCorrectas($idUsuario, $idSala);
+            $puntajePartida = (count($misPalabrasCorrectas)*100) + ($p200*100);
+            dump($puntajePartida);
+            $usuario->setPuntajePartida($puntajePartida);
+            $puntajeGlobal = $usuario->getPuntajeGlobal();
+            $puntajeGlobal +=$puntajePartida;
+            $usuario->setPuntajeGlobal($puntajeGlobal);
+            $this->em->remove($eliminarPartidaJugador);
+            $this->em->flush();
+        } catch (\Exception $e) {
+
+        }
         return $this->render('estadisticas_partida/index.html.twig', [
             'jugadores' => $jugadores,
             'jugador_1' => $palabrasJugador_1,

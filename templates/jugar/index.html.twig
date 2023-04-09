@@ -65,7 +65,7 @@
 
     <script type="text/javascript">
         let control = 0
-        let totalTime = 10
+        let totalTime = 30
         var idImagen = '{{ idImagenes.0.id }}'
         $('#btn-palabras').attr('disabled', 'disabled')
         $('#palabraRelacionada').attr('disabled', 'disabled')
@@ -105,7 +105,8 @@
                 $('#descripcion-palabra').text('{{ urlImagen2.0.descripcion | capitalize }}')
                 $("#imagenJuego").attr("src", "{{ asset(urlImagen2.0.imagenUrl) }}");
                 idImagen = {{ idImagenes.0.imagenId_2 }}
-                totalTime = 10
+                totalTime = 30
+
                 control++
                 console.log(control)
                 updateClock()
@@ -117,6 +118,7 @@
             }else if(control===3){
                 $('#dom-del-juego').hide()
                 $('#final-partida').show('slow')
+
             } else {
                 if(control<3){
                     totalTime -= 1;
@@ -132,9 +134,9 @@
 
         function tempo() {
             $("#resultados-parciales").load(
-                Routing.generate('app_resultados_parciales', {id: idImagen})
+                Routing.generate('app_resultados_parciales', {id: idImagen, numSala : '{{ sala }}'})
             )
-            setTimeout(tempo, 500);
+            setTimeout(tempo, 1000);
         }
 
         $("#enviarPalabras").submit(function (e) {
@@ -143,6 +145,7 @@
             var ruta = Routing.generate("app_guardar_palabras")
             var palabraRelacionada = document.getElementById("palabraRelacionada").value
             data.idImagen = idImagen
+            data.sala = '{{ sala }}'
             $.ajax({
                 type: 'POST',
                 url: ruta += '?' + $.param(data),
