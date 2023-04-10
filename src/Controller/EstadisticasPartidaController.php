@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Estadisticas;
-use App\Entity\Palabra;
 use App\Entity\Partidas;
 use App\Entity\UsuarioPalabras;
 use Doctrine\ORM\EntityManagerInterface;

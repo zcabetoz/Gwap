@@ -1,23 +1,20 @@
 
 header {
-    background-color: #7c7c7c;
-    color: #fff;
-    text-align: center;
+    box-sizing: border-box;
+    padding: 5px 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-bottom: solid 2px;
+}
 
-}
-.enlace{
-    margin-left: 300px;
-}
 main {
-    max-width: 800px;
+    color: white;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 2em;
-}
-
-h1 {
-    font-size: 2em;
-    margin-bottom: 1em;
-    text-align: center;
 }
 
 p {
@@ -36,8 +33,9 @@ li {
 }
 
 li::before {
+    color: white;
     content: "• ";
-    color: #333;
+    /*color: #333;*/
     font-weight: bold;
     display: inline-block;
     margin-right: 0.5em;

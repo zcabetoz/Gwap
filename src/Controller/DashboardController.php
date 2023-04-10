@@ -29,10 +29,10 @@ class DashboardController extends AbstractController
     public function mostrarPartidasAction(): Response
     {
         $user = $this->getUser();
-        $rol = $user->getRoles();
         if (!isset($user)) {
             return $this->redirectToRoute('app_login');
         }
+        $rol = $user->getRoles();
         return $this->render('dashboard/index.html.twig', [
             'usuario' => $user,
             'data' =>[],

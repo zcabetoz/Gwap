@@ -3,47 +3,46 @@
 {% block title %}Reglas del juego{% endblock %}
 
 {% block body %}
-    <link rel="stylesheet" href="{{ asset('css/styleReglas.css') }}">
+    <div class="container" id="div-reglas">
+        <link rel="stylesheet" href="{{ asset('css/styleReglas.css') }}">
+        <header class="bg-primary">
+            <h1>Reglas del Juego</h1>
+            <a href="{{ path('app_dashboard') }}" class="volver">Volver</a>
+        </header>
+        <main>
+            <h2>Objetivo del Juego</h2>
+            <p>El objetivo del juego es adivinar la mayor cantidad de palabras relacionadas con la imagen que se
+                muestra.</p>
 
+            <h2>Reglas del Juego</h2>
+            <ul>
+                <li>Se mostrará una imagen y los usuarios deberán ingresar palabras relacionadas con dicha imagen en
+                    un
+                    tiempo determinado.
+                </li>
+                <li>Cada palabra ingresada por el usuario será evaluada para determinar si está relacionada o no con
+                    la
+                    imagen.
+                </li>
+                <li>Presionar la tecla enter cada vez que se desea ingresar una palabra</li>
+                <li>Los usuarios recibirán puntos por cada palabra relacionada ingresada correctamente.</li>
+                <li>El usuario con la mayor cantidad de puntos al final del juego será el ganador.</li>
+                <li>El juego puede ser jugado por al menos 3 jugadores.</li>
+            </ul>
 
-    <header>
-            <h1>Reglas del Juego
-            <a href="{{ path('app_dashboard') }}" class="enlace px-5 fs-3 btn btn-danger "> <i class="bi bi-arrow-left"></i></a>
-            </h1>
-    </header>
-    <main >
-        <h2>Objetivo del Juego</h2>
-        <p>El objetivo del juego es adivinar la mayor cantidad de palabras relacionadas con la imagen que se
-            muestra.</p>
+            <h2>Tiempo del Juego</h2>
+            <p> La duración de cada juego debe ser de 3 minutos, y 3 imágenes, es decir una imagen por
+                minuto.</p>
 
-        <h2>Reglas del Juego</h2>
-        <ul>
-            <li>Se mostrará una imagen y los usuarios deberán ingresar palabras relacionadas con dicha imagen en
-                un
-                tiempo determinado.
-            </li>
-            <li>Cada palabra ingresada por el usuario será evaluada para determinar si está relacionada o no con
-                la
-                imagen.
-            </li>
-            <li>Presionar la tecla enter cada vez que se desea ingresar una palabra</li>
-            <li>Los usuarios recibirán puntos por cada palabra relacionada ingresada correctamente.</li>
-            <li>El usuario con la mayor cantidad de puntos al final del juego será el ganador.</li>
-            <li>El juego puede ser jugado por al menos 3 jugadores.</li>
-        </ul>
+            <h2>Palabras No Permitidas</h2>
+            <p>Las siguientes palabras no serán permitidas durante el juego:</p>
+            <ul>
+                <li>Palabras que no estén en español.</li>
+                <li>Palabras repetidas por un mismo usuario.</li>
+                <li>Palabras no relacionadas con la imagen.</li>
+            </ul>
+        </main>
 
-        <h2>Tiempo del Juego</h2>
-        <p> La duración de cada juego debe ser de 3 minutos, y 3 imágenes, es decir una imagen por
-            minuto.</p>
-
-        <h2>Palabras No Permitidas</h2>
-        <p>Las siguientes palabras no serán permitidas durante el juego:</p>
-        <ul>
-            <li>Palabras que no estén en español.</li>
-            <li>Palabras repetidas por un mismo usuario.</li>
-            <li>Palabras no relacionadas con la imagen.</li>
-        </ul>
-    </main>
-
+    </div>
 
 {% endblock %}

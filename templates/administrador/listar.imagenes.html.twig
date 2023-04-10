@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
+{% block title %}Imagenes | {{ parent() }}{% endblock %}
 {% block body %}
     <div class="container " style="color:white;">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
-                <div class="card-header" id="listar-imagenes">
+                <div class="card-header bg-primary" id="listar-imagenes">
                     <h1 id="h1-title">Listado de Imagenes</h1>
-                    <a href="{{ path('app_administrador') }}" id="volver">Volver</a>
+                    <a href="{{ path('app_administrador') }}" class="volver">Volver</a>
                 </div>
                 <div class="card-body mt-5">
                     <div class="table-responsive text-center mt-3">
@@ -37,7 +38,6 @@
         $(document).ready(function () {
             $('#tableImagenes').DataTable(
                 {
-                    ordering: false,
                     autoWidth: false,
                     columnDefs: [
                         {
@@ -45,7 +45,7 @@
                             className: 'mdc-data-table__cell',
                         },
                     ],
-                    pageLength : 5,
+                    pageLength: 5,
                     lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
                     language: {
                         "decimal": "",
