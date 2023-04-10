@@ -206,22 +206,22 @@ body{
     border-radius: 20px;
     background: transparent;
 }
-
 #listar-imagenes{
-
+    box-sizing: border-box;
+    padding: 5px 30px;
     background: #0a53be;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     color: white;
-
 }
 #volver{
-    margin-left: 100px;
+    /*margin-left: 100px;*/
     text-decoration: none;
     border: solid 2px white;
     border-radius: 20px;
     color: white;
     padding: 10px;
+    margin-left: auto;
 }

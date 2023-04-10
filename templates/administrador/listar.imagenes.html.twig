@@ -1,29 +1,29 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container">
+    <div class="container " style="color:white;">
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
                 <div class="card-header" id="listar-imagenes">
-                    <h1>Listado de Imagenes</h1>
+                    <h1 id="h1-title">Listado de Imagenes</h1>
                     <a href="{{ path('app_administrador') }}" id="volver">Volver</a>
                 </div>
-                <div class="card-body">
+                <div class="card-body mt-5">
                     <div class="table-responsive text-center mt-3">
-                        <table class="table table-striped table-hover">
-                            <tr>
-                                <thead class="fs-5">
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                </thead>
+                        <table id="tableImagenes" class=" table table-striped table-hover">
+                            <thead style="color: white">
+                            <tr class="fs-5">
+                                <th class="text-center">Imagen</th>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Categoria</th>
                             </tr>
+                            </thead>
                             <tbody>
                             {% for imagen in imagenes %}
                                 <tr>
                                     <td><img src="{{ asset(imagen.imagenUrl) }}" alt="{{ imagen.imagenUrl }}"
                                              style="height: 50px;width: 50px;border-radius: 10px"></td>
-                                    <td style="vertical-align: middle">{{ imagen.descripcion | capitalize }}</td>
-                                    <td style="vertical-align: middle">{{ imagen.categoria | capitalize}}</td>
+                                    <td style="vertical-align: middle; color: white">{{ imagen.descripcion | capitalize }}</td>
+                                    <td style="vertical-align: middle; color: white">{{ imagen.categoria | capitalize }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -33,4 +33,43 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#tableImagenes').DataTable(
+                {
+                    ordering: false,
+                    autoWidth: false,
+                    columnDefs: [
+                        {
+                            targets: ['_all'],
+                            className: 'mdc-data-table__cell',
+                        },
+                    ],
+                    pageLength : 5,
+                    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+                    language: {
+                        "decimal": "",
+                        "emptyTable": "No hay información",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "search": "Buscar:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                        }
+                    },
+                }
+            );
+        });
+    </script>
 {% endblock %}
+

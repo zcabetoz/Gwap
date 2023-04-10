@@ -1,35 +1,23 @@
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '1', 'alas'), (NULL, '1', 'despegue'), (NULL, '1', 'pista'), (NULL, '1', 'aereopuerto'), 
-(NULL, '1', 'viaje');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '4', 'alas'), (NULL, '4', 'despegue'), (NULL, '4', 'pista'), (NULL, '4', 'aereopuerto'), (NULL, '4', 'viaje');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '2', 'messi'), (NULL, '2', 'pele'), (NULL, '2', 'maradona'), (NULL, '2', 'tachira'), 
-(NULL, '2', 'mundial');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '1', 'messi'), (NULL, '1', 'pele'), (NULL, '1', 'maradona'), (NULL, '1', 'tachira'), (NULL, '1', 'mundial');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '3', 'jordan'), (NULL, '3', 'kobi'), (NULL, '3', 'lebron'), (NULL, '3', 'cesta'), 
-(NULL, '3', 'triple');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '11', 'jordan'), (NULL, '11', 'kobi'), (NULL, '11', 'lebron'), (NULL, '11', 'cesta'), (NULL, '11', 'triple');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '4', 'chocolate'), (NULL, '4', 'cono'), (NULL, '4', 'fresa'), (NULL, '4', 'sabores'), 
-(NULL, '4', 'heladeria');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '10', 'chocolate'), (NULL, '10', 'cono'), (NULL, '10', 'fresa'), (NULL, '10', 'sabores'), (NULL, '10', 'heladeria');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '5', 'flor'), (NULL, '5', 'girasol'), (NULL, '5', 'tulipan'), (NULL, '5', 'margarita'), 
-(NULL, '5', 'rosa');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '8', 'flor'), (NULL, '8', 'girasol'), (NULL, '8', 'tulipan'), (NULL, '8', 'margarita'), (NULL, '8', 'rosa');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '6', 'cuento'), (NULL, '6', 'novela'), (NULL, '6', 'escritor'), (NULL, '6', 'hojas'), 
-(NULL, '6', 'biblioteca');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '7', 'cuento'), (NULL, '7', 'novela'), (NULL, '7', 'escritor'), (NULL, '7', 'hojas'), (NULL, '7', 'biblioteca');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '7', 'hueso'), (NULL, '7', 'ladrar'), (NULL, '7', 'perrarina'), (NULL, '7', 'leal'), 
-(NULL, '7', 'peludo');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '3', 'hueso'), (NULL, '3', 'ladrar'), (NULL, '3', 'perrarina'), (NULL, '3', 'leal'), (NULL, '3', 'peludo');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '8', 'queso'), (NULL, '8', 'chorizo'), (NULL, '8', 'salami'), (NULL, '8', 'pepperoni'), 
-(NULL, '8', 'italia');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '5', 'queso'), (NULL, '5', 'chorizo'), (NULL, '5', 'salami'), (NULL, '5', 'pepperoni'), (NULL, '5', 'italia');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '9', 'mar'), (NULL, '9', 'arena'), (NULL, '9', 'sal'), (NULL, '9', 'sol'), 
-(NULL, '9', 'palma');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '6', 'mar'), (NULL, '6', 'arena'), (NULL, '6', 'sal'), (NULL, '6', 'sol'), (NULL, '6', 'palma');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '10', 'tecnologia'), (NULL, '10', 'inteligencia'), (NULL, '10', 'ia'), (NULL, '10', 'algoritmo'), 
-(NULL, '10', 'futuro');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '9', 'tecnologia'), (NULL, '9', 'inteligencia'), (NULL, '9', 'ia'), (NULL, '9', 'algoritmo'), (NULL, '9', 'futuro');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '11', 'teclas'), (NULL, '11', 'numeros'), (NULL, '11', 'letras'), (NULL, '11', 'simbolos'), 
-(NULL, '11', 'flechas');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '2', 'teclas'), (NULL, '2', 'numeros'), (NULL, '2', 'letras'), (NULL, '2', 'simbolos'), (NULL, '2', 'flechas');
 
-INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '12', 'samsung'), (NULL, '12', 'nokia'), (NULL, '12', 'motorola'), (NULL, '12', 'iphone'), 
-(NULL, '12', 'redmi');
+INSERT INTO `palabra` (`id`, `imagen_id`, `palabra`) VALUES (NULL, '12', 'samsung'), (NULL, '12', 'nokia'), (NULL, '12', 'motorola'), (NULL, '12', 'iphone'), (NULL, '12', 'redmi');

@@ -3,11 +3,7 @@
 {% block title %}Estadisticas | {{ parent() }} {% endblock %}
 
 {% block body %}
-    {#        {{ dump(jugador_1) }} #}
-    {#    {{ dump(jugadores) }} #}
-
     {% for  control, usuarios in jugadores %}
-
         <h1>{{ usuarios.nombre_jugador }}</h1>
 
         {% if control == 0 %}
@@ -28,9 +24,6 @@
                     - {{ palabras.resultado_palabra }}</li>
             {% endfor %}
         {% endif %}
-
     {% endfor %}
-
-
     <a href="{{ path('app_dashboard') }}"><h1 class="bg-white">Ir a menu principal</h1></a>
 {% endblock %}
