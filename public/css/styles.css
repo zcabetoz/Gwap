@@ -200,3 +200,28 @@ body{
 .menu-collapsed .item{
     width: 100px;
 }
+
+.btn-nav{
+    border: 2px solid white;
+    border-radius: 20px;
+    background: transparent;
+}
+
+#listar-imagenes{
+
+    background: #0a53be;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+
+}
+#volver{
+    margin-left: 100px;
+    text-decoration: none;
+    border: solid 2px white;
+    border-radius: 20px;
+    color: white;
+    padding: 10px;
+}

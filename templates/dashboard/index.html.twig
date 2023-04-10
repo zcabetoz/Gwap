@@ -10,7 +10,7 @@
             {% else %}
             <div class="container">
                 {% endif %}
-                <a class="navbar-brand d-flex gap-2">
+                <a class="navbar-brand d-flex gap-2" style="margin-left: 50px">
                     <i class="bi bi-joystick"></i>
                     <span>Gwap</span>
                 </a>
@@ -23,10 +23,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="menu">
-                    <ul class="navbar-nav ms-auto gap-5">
+                    <ul class="navbar-nav ms-auto gap-5" style="margin-right: 50px">
                         {% if rol == 'ROLE_ADMIN' %}
                             <li class="nav-item">
-                                <a href="{{ path('app_administrador') }}" class="nav-link active" aria-current="page" style="color: #0a0101git ">Opciones de Administrador</a>
+                                <a href="{{ path('app_administrador') }}" class="nav-link active btn-nav btn" aria-current="page">Opciones de Administrador</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">

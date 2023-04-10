@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <div class="card-header" id="listar-imagenes">
+                    <h1>Listado de Imagenes</h1>
+                    <a href="{{ path('app_administrador') }}" id="volver">Volver</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive text-center mt-3">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <thead class="fs-5">
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                </thead>
+                            </tr>
+                            <tbody>
+                            {% for imagen in imagenes %}
+                                <tr>
+                                    <td><img src="{{ asset(imagen.imagenUrl) }}" alt="{{ imagen.imagenUrl }}"
+                                             style="height: 50px;width: 50px;border-radius: 10px"></td>
+                                    <td style="vertical-align: middle">{{ imagen.descripcion | capitalize }}</td>
+                                    <td style="vertical-align: middle">{{ imagen.categoria | capitalize}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
