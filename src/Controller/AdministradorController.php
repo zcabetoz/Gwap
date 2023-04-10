@@ -13,12 +13,13 @@ class AdministradorController extends AbstractController
      */
     public function index(): Response
     {
+        $administrador = $this->getUser();
         $adminrRole = $this->getUser()->getRoles();
         if($adminrRole[0] === 'ROLE_USER'){
             return $this->redirectToRoute('app_dashboard');
         }
         return $this->render('administrador/index.html.twig', [
-            'controller_name' => 'AdministradorController',
+            'administrador' => $administrador
         ]);
     }
 }

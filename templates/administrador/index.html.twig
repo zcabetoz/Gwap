@@ -1,20 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdministradorController!{% endblock %}
+{% block title %}Administrador | {{ parent() }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div id="body-container">
+        <div id="side-menu" class="menu-expanded">
+            <div id="header">
+                <div id="title"><span>Menu</span></div>
+                <div id="menu-btn">
+                    <div class="btn-hamburguer"></div>
+                    <div class="btn-hamburguer"></div>
+                    <div class="btn-hamburguer"></div>
+                </div>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/Code/www/unet/Gwap/src/Controller/AdministradorController.php'|file_link(0) }}">src/Controller/AdministradorController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/Code/www/unet/Gwap/templates/administrador/index.html.twig'|file_link(0) }}">templates/administrador/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <div id="profile">
+                <div id="photo"><img src="{{ asset('assets/administrador.jpg') }}" alt="administrador.jpg"></div>
+                <div id="name"><span>{{ administrador.getNombre }}</span></div>
+            </div>
+            <div id="menu-items">
+                <div class="item">
+                    <a href="#">
+                        <div class="icon"><img src="{{ asset('assets/listar-fotos.png') }}" alt=""></div>
+                        <div class="title"><span>Listar Imagenes</span></div>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="#">
+                        <div class="icon"><img src="{{ asset('assets/cargar-imagen.png') }}" alt=""></div>
+                        <div class="title"><span>Agregar Imagen</span></div>
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="#">
+                        <div class="icon"><img src="{{ asset('assets/paritdas.png') }}" alt=""></div>
+                        <div class="title"><span>Mostrar Partidas</span></div>
+                    </a>
+                </div>
+                <div class="item separator">
+
+                </div>
+
+                <div class="item">
+                    <a href="{{ path('app_dashboard') }}">
+                        <div class="icon"><img src="{{ asset('assets/salir.png') }}" alt=""></div>
+                        <div class="title"><span>Salir</span></div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const btn = document.querySelector('#menu-btn')
+        const menu = document.querySelector('#side-menu')
+        btn.addEventListener('click', evt => {
+            menu.classList.toggle("menu-expanded")
+            menu.classList.toggle("menu-collapsed")
+            document.querySelector('body').classList.toggle('body-expanded')
+        });
+    </script>
 {% endblock %}
