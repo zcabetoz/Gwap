@@ -34,8 +34,6 @@ class EstadisticasPartidaController extends AbstractController
         $idUsuario = $this->getUser()->getId();
         $partidaJugador = $this->em->getRepository(Partidas::class)->findByIdSalaJugador($idUsuario);
 
-
-
         $jugadores = $this->em->getRepository(Estadisticas::class)->findJugadores($idSala);
 
         $palabrasCorrectasJ1 = $this->em->getRepository(UsuarioPalabras::class)->palabrasCorrectas($jugadores[0]['id_jugador'], $idSala);
@@ -50,9 +48,10 @@ class EstadisticasPartidaController extends AbstractController
         for ($i = 0; $i < count($palabrasCorrectasJ3); $i++) {
             $pc3[$i] = $palabrasCorrectasJ3[$i]['palabras_relacionadas'];
         }
+
        $puntaje200 = array_intersect($pc1, $pc2, $pc3);
         if(!empty($puntaje200)){
-            if($puntaje200[0] == "" ) {
+            if($puntaje200[array_key_first($puntaje200)] == "") {
                 $p200 = 0;
             }else{
                     $p200 = count($puntaje200);
@@ -61,22 +60,18 @@ class EstadisticasPartidaController extends AbstractController
             $p200 =0;
         }
 
-        dump($puntaje200);
-        dump($p200);
-        dump(count($palabrasCorrectasJ3));
-        dump(count($palabrasCorrectasJ2));
-        dump(count($palabrasCorrectasJ1));
-
         $palabrasJugador_1 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[0]['id_jugador'], $idSala);
+        $puntajeJugador_1 = (count($palabrasCorrectasJ1)*100) + ($p200*100);
         $palabrasJugador_2 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[1]['id_jugador'], $idSala);
+        $puntajeJugador_2 = (count($palabrasCorrectasJ2)*100) + ($p200*100);
         $palabrasJugador_3 = $this->em->getRepository(UsuarioPalabras::class)->findPalabrasJugador($jugadores[2]['id_jugador'], $idSala);
+        $puntajeJugador_3 = (count($palabrasCorrectasJ3)*100) + ($p200*100);
 
-
+        dump($palabrasJugador_1);
         try {
             $eliminarPartidaJugador = $this->em->getRepository(Partidas::class)->find($partidaJugador[0]['id']);
             $misPalabrasCorrectas = $this->em->getRepository(UsuarioPalabras::class)->palabrasCorrectas($idUsuario, $idSala);
             $puntajePartida = (count($misPalabrasCorrectas)*100) + ($p200*100);
-            dump($puntajePartida);
             $usuario->setPuntajePartida($puntajePartida);
             $puntajeGlobal = $usuario->getPuntajeGlobal();
             $puntajeGlobal +=$puntajePartida;
@@ -90,7 +85,12 @@ class EstadisticasPartidaController extends AbstractController
             'jugadores' => $jugadores,
             'jugador_1' => $palabrasJugador_1,
             'jugador_2' => $palabrasJugador_2,
-            'jugador_3' => $palabrasJugador_3
+            'jugador_3' => $palabrasJugador_3,
+            'puntajeJugador_1' => $puntajeJugador_1,
+            'puntajeJugador_2' => $puntajeJugador_2,
+            'puntajeJugador_3' => $puntajeJugador_3,
+            'coincidencias'=>$puntaje200
+
         ]);
     }
 }

@@ -95,6 +95,7 @@ class JugarController extends AbstractController
         $palabraForm = $request->request->get('palabra');
         $idImagen = $get['idImagen'];
         $numeroSala = $get['sala'];
+        $urlImagen = $get['urlImagen'];
         $usuario = $this->getUser();
         $palabraExiste = $this->em->getRepository(UsuarioPalabras::class)->findByPalabraExiste($palabraForm, $idUsuario, $idImagen, $numeroSala);
         if($palabraExiste){
@@ -103,7 +104,7 @@ class JugarController extends AbstractController
             $palabraCorrecta = $this->em->getRepository(Palabra::class)->findByPalabraCorrecta($palabraForm, $idImagen);
             if ($request->isXmlHttpRequest()) {
                 $resultado = $palabraCorrecta ? 'CORRECTO' : 'INCORRECTO';
-                $palabraRelacionada = new UsuarioPalabras($palabraForm, $resultado, $idImagen, $numeroSala);
+                $palabraRelacionada = new UsuarioPalabras($palabraForm, $resultado, $idImagen, $numeroSala, $urlImagen);
                 $palabraRelacionada->setIdUsuario($usuario);
                 $this->em->persist($palabraRelacionada);
                 $this->em->flush();

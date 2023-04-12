@@ -79,7 +79,7 @@ class UsuarioPalabrasRepository extends ServiceEntityRepository
     public function findPalabrasJugador($idJugador, $numeroSala){
         return $this->getEntityManager()
             ->createQuery('
-                SELECT palabras.palabras_relacionadas, palabras.resultado_palabra, palabras.id_imagen
+                SELECT palabras.palabras_relacionadas, palabras.resultado_palabra, palabras.id_imagen, palabras.url_imagen
                 FROM App:UsuarioPalabras palabras
                 WHERE palabras.id_usuario = :id AND palabras.numero_sala = :sala
             ')

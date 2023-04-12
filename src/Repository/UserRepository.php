@@ -42,6 +42,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
+    public function findByPuntajeGlobal(){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT usuario.nombre, usuario.puntaje_global
+                FROM App:User usuario
+                ORDER BY usuario.puntaje_global DESC 
+            ')
+            ->getResult();
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */

@@ -5,15 +5,24 @@
 {% block body %}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card-header bg-primary title-header" style="border-radius: 20px">
+                    <i class="bi bi-joystick"><span style="margin-left: 5px">Gwap</span></i>
+                    <span style="margin-left: 100px">Buena Suerte</span>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-center" id="dom-del-juego">
-            <div class="col-md-4 mt-4 text-center">
+            <div class="col-md-4 mt-2 text-center">
                 <div id="div-imagenes-de-juego">
                     <div>
-                        <h1><span id="descripcion-palabra">{{ urlImagen1.0.descripcion | capitalize }}</span></h1>
+                        <h1><span class="text-white"
+                                  id="descripcion-palabra">{{ urlImagen1.0.descripcion | capitalize }}</span></h1>
                     </div>
                     <div id="divImagen">
                         <img id="imagenJuego" src="{{ asset(urlImagen1.0.imagenUrl) }} "
-                             style="width: 100%;height: 100%">
+                             style="width: 100%;height: 100%; border-radius: 5px">
                     </div>
                     <div id="imagen-de-espera">
                         <h1 id="header-espera">GWAP</h1>
@@ -33,15 +42,17 @@
                         </ul>
                     </div>
                 </div>
-                <h2 class="mt-5">Palabras Relacionadas</h2>
-                <ul id="lista de palabras">
 
-                </ul>
+                <h2 class="mt-5 text-white">Palabras Relacionadas</h2>
                 <form method="post" id="enviarPalabras">
-                    <label for="respuesta" class="form-label float-start"> <strong>Ingresar Palabras</strong></label>
-                    <input id="palabraRelacionada" type="text" name="respuesta" class="form-control" autofocus required>
-                    <button type="submit" class="input-group-text btn btn-primary mt-3" id="btn-palabras"> Enviar
-                    </button>
+                    <label for="respuesta" class="form-label float-start text-white" style="font-size: 20px">Ingresar
+                        Palabras</label>
+                    <div class="input-group mb-3">
+                        <input id="palabraRelacionada" name="respuesta" type="text" class="form-control" autofocus
+                               required aria-describedby="button-addon2">
+                        <button type="submit" class="input-group-text btn btn-primary " id="btn-palabras">Enviar
+                        </button>
+                    </div>
                 </form>
                 <div>
                     cuenta regresiva
@@ -59,7 +70,8 @@
         </div>
         <div id="final-partida">
             <h1>El juego ha concluido</h1>
-            <a href="{{ path('app_estadisticas_partida', {idSala : sala}) }}" class="btn btn-primary">Ir a estadisticas</a>
+            <a href="{{ path('app_estadisticas_partida', {idSala : sala}) }}" class="btn btn-primary">Ir a
+                estadisticas</a>
         </div>
     </div>
 
@@ -67,6 +79,7 @@
         let control = 0
         let totalTime = 30
         var idImagen = '{{ idImagenes.0.id }}'
+        var urlImagen = '{{ urlImagen1.0.imagenUrl }}'
         $('#btn-palabras').attr('disabled', 'disabled')
         $('#palabraRelacionada').attr('disabled', 'disabled')
         $('#descripcion-palabra').hide()
@@ -99,12 +112,14 @@
                 }
             })
         }
+
         function updateClock() {
             $("#cronometro").text(totalTime)
-            if (totalTime === 0 ) {
+            if (totalTime === 0) {
                 $('#descripcion-palabra').text('{{ urlImagen2.0.descripcion | capitalize }}')
                 $("#imagenJuego").attr("src", "{{ asset(urlImagen2.0.imagenUrl) }}");
                 idImagen = {{ idImagenes.0.imagenId_2 }}
+                    urlImagen = '{{ urlImagen2.0.imagenUrl }}'
                 totalTime = 30
 
                 control++
@@ -114,13 +129,14 @@
                     $('#descripcion-palabra').text('{{ urlImagen3.0.descripcion | capitalize }}')
                     $("#imagenJuego").attr("src", "{{ asset(urlImagen3.0.imagenUrl) }}");
                     idImagen = {{ idImagenes.0.imagenId_3 }}
+                        urlImagen = '{{ urlImagen3.0.imagenUrl }}'
                 }
-            }else if(control===3){
+            } else if (control === 3) {
                 $('#dom-del-juego').hide()
                 $('#final-partida').show('slow')
 
             } else {
-                if(control<3){
+                if (control < 3) {
                     totalTime -= 1;
                     setTimeout("updateClock()", 1000);
                 }
@@ -134,7 +150,7 @@
 
         function tempo() {
             $("#resultados-parciales").load(
-                Routing.generate('app_resultados_parciales', {id: idImagen, numSala : '{{ sala }}'})
+                Routing.generate('app_resultados_parciales', {id: idImagen, numSala: '{{ sala }}'})
             )
             setTimeout(tempo, 1000);
         }
@@ -146,6 +162,7 @@
             var palabraRelacionada = document.getElementById("palabraRelacionada").value
             data.idImagen = idImagen
             data.sala = '{{ sala }}'
+            data.urlImagen = urlImagen
             $.ajax({
                 type: 'POST',
                 url: ruta += '?' + $.param(data),

@@ -1,7 +1,7 @@
 {% block body %}
     <div class="table-responsive text-center mt-3">
         <table class="table table-striped table-hover">
-            <thead>
+            <thead class="text-white" style="font-size: 25px">
             <tr>
                 <th>Sala</th>
                 <th>Usuarios</th>
@@ -11,10 +11,10 @@
             <tbody>
             {% for data in data %}
                 <tr>
-                    <td>
+                    <td class="text-white" style="font-size: 20px">
                         {{ data.sala.sala }}
                     </td>
-                    <td>
+                    <td class="text-white"  style="font-size: 20px">
                         {{ data.users | lower }}
                     </td>
                     <td>

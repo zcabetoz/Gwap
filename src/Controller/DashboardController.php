@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Estadisticas;
 use App\Entity\Imagenes;
 use App\Entity\Partidas;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +45,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/salas-disponible/", name="app_salas_disponibles" , options={"expose"=true})
      */
-    public function mostrarSalasAction(): Response
+    public function mostrarSalasActionAction(): Response
     {
         $estadoPartida = [];
         $i = 0;
@@ -120,5 +121,17 @@ class DashboardController extends AbstractController
             return $this->redirectToRoute('app_dashboard');
         }
         return $this->redirectToRoute('app_jugar', array('sala' => $contador + 1));
+    }
+
+    /**
+     * @Route("/dashboard/stadisticas-globales", name="app_dashboard_estadisticas_globales")
+     */
+    public function estadisticasGlobalesAction(){
+
+        $usuarios = $this->em->getRepository(User::class)->findByPuntajeGlobal();
+
+        return $this->render('dashboard/estadisiticas.globales.html.twig',[
+            'usuarios'=>$usuarios
+        ]);
     }
 }

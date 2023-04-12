@@ -30,7 +30,7 @@
                             </li>
                         {% endif %}
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">Estadísticas</a>
+                            <a href="{{ path('app_dashboard_estadisticas_globales') }}" class="nav-link active" aria-current="page">Estadísticas</a>
                         </li>
                         <li class="nav-item"><a href="{{ path('app_reglas') }}" class="nav-link active">Reglas</a></li>
                         <li class="nav-item"><span class="nav-link active"><i
@@ -48,7 +48,7 @@
                 Partidas Disponibles
             </div>
 
-            <div class="card-body" id="salas-disponibles" style="overflow-y: auto">
+            <div class="card-body bg-secondary tabla-estadisticas" id="salas-disponibles" style="overflow-y: auto">
                 {% include 'dashboard/salas.html.twig' %}
             </div>
 

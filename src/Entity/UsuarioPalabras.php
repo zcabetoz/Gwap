@@ -43,12 +43,18 @@ class UsuarioPalabras
      */
     private $numero_sala;
 
-    public function __construct($palabras_relacionadas=null, $resultado_palabra = null, $id_imagen = null, $numero_sala = null)
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $url_imagen;
+
+    public function __construct($palabras_relacionadas=null, $resultado_palabra = null, $id_imagen = null, $numero_sala = null, $url_imagen = null)
     {
         $this->palabras_relacionadas = $palabras_relacionadas;
         $this->resultado_palabra = $resultado_palabra;
         $this->id_imagen = $id_imagen;
         $this->numero_sala = $numero_sala;
+        $this->url_imagen = $url_imagen;
     }
 
     public function getId(): ?int
@@ -112,6 +118,18 @@ class UsuarioPalabras
     public function setNumeroSala(int $numero_sala): self
     {
         $this->numero_sala = $numero_sala;
+
+        return $this;
+    }
+
+    public function getUrlImagen(): ?string
+    {
+        return $this->url_imagen;
+    }
+
+    public function setUrlImagen(string $url_imagen): self
+    {
+        $this->url_imagen = $url_imagen;
 
         return $this;
     }

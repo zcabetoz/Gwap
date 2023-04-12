@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reglas del juego{% endblock %}
+{% block title %}Reglas del juego | {{ parent() }}{% endblock %}
 
 {% block body %}
     <div class="container" id="div-reglas">
         <link rel="stylesheet" href="{{ asset('css/styleReglas.css') }}">
-        <header class="bg-primary">
-            <h1>Reglas del Juego</h1>
+        <header class="bg-primary title-header ">
+            <i class="bi bi-joystick"><span style="margin-left: 5px">Gwap</span></i>
+            <span style="margin-left: 100px">Reglas del Juego</span>
             <a href="{{ path('app_dashboard') }}" class="volver">Volver</a>
         </header>
         <main>
