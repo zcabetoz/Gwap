@@ -19,18 +19,18 @@
                     </td>
                     <td>
                         {% if (data.estadoSala.0.estado_partida is same as(0)) %}
-                            <span id="no-disponible" style="color: darkred">No disponible</span>
+                            <span id="no-disponible" style="color: darkred;font-size: 20px">No disponible</span>
                         {% else %}
                             {% if(salaJugador is empty) %}
                                 <a href="{{ path('app_jugar', {sala : data.sala.sala, idJugador : usuario.getId()}) }}"
-                                   class="btn btn-primary">Unirse</a>
+                                   class="btn btn-primary botones">Unirse</a>
                             {% else %}
                                 {% if (data.sala.sala == salaJugador.0.sala) %}
                                     <a href="{{ path('app_jugar', {sala : data.sala.sala, idJugador : usuario.getId()}) }}"
-                                       class="btn btn-primary">Unirse</a>
+                                       class="btn btn-primary botones">Unirse</a>
                                 {% else %}
                                     <a href="{{ path('app_jugar', {sala : data.sala.sala, idJugador : usuario.getId()}) }}"
-                                       class="btn btn-danger disabled">Unirse</a>
+                                       class="btn btn-danger disabled botones">Unirse</a>
                                 {% endif %}
                             {% endif %}
                         {% endif %}

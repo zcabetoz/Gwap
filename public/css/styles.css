@@ -49,8 +49,8 @@ body{
 }
 
 #body-container{
-    font-family: 'Alkatra', cursive, 'Playfair Display', serif;
-    font-size: 18px;
+    font-family: 'Kanit', sans-serif , 'Open Sans', sans-serif, 'Roboto', sans-serif;
+    font-size: 25px;
     padding: 0;
     margin: 0 0 0 var(--width-collapsed);
 }
@@ -75,7 +75,7 @@ body{
 }
 #side-menu #header{
     box-sizing: border-box;
-    border-bottom: solid 1px var(--hovercolor);
+    border-bottom: solid 1px white;
 }
 #side-menu #header #title{
     box-sizing: border-box;
@@ -106,7 +106,7 @@ body{
 }
 
 #side-menu #profile{
-    border-bottom: solid 1px var(--hovercolor);
+    border-bottom: solid 1px white;
     padding: var(--padding) 0;
     text-align: center;
 }
@@ -122,7 +122,7 @@ body{
 
 }
 #side-menu #profile #photo, #side-menu #profile #name{
-    font-size: 24px;
+    font-size: 30px;
     padding: var(--padding) 0;
     overflow: hidden;
 }
@@ -138,7 +138,7 @@ body{
 
 #side-menu #menu-items .item .icon,
 #side-menu #menu-items .item .title{
-    font-size: 14px;
+    font-size: 18px;
     vertical-align: middle;
     overflow: hidden;
     display: inline-block;
@@ -164,7 +164,7 @@ body{
 
 #side-menu #menu-items .item.separator{
     height: 1px;
-    border-bottom: solid 1px var(--hovercolor);
+    border-bottom: solid 1px white;
     margin: 15px 0;
 }
 
@@ -254,4 +254,7 @@ body{
     border-radius: 20px;
     box-sizing: border-box;
     padding: 20px;
+}
+.botones{
+    border-radius: 10px;
 }

@@ -9,7 +9,9 @@
             <div class="col-md-12">
                 <div class="card-header bg-primary title-header" style="border-radius: 20px">
                     <i class="bi bi-joystick"><span style="margin-left: 5px">Gwap</span></i>
-                    <span style="margin-left: 100px">Buena Suerte</span>
+                    <span id="title-estadisitica" style="margin-left: 100px">Buena Suerte !!!</span>
+                    <a id="boton-estadisticas" href="{{ path('app_estadisticas_partida', {idSala : sala}) }}" class="btn btn-primary volver">Ir a
+                        estadisticas</a>
                 </div>
             </div>
         </div>
@@ -54,12 +56,14 @@
                         </button>
                     </div>
                 </form>
-                <div>
-                    cuenta regresiva
+                <div class="text-white" id="reloj-inicial">
+                    <h1>00 : 60</h1>
                 </div>
-                <div id="cronometro">
+                <h1>
+                    <div id="cronometro" class="text-white">
 
-                </div>
+                    </div>
+                </h1>
             </div>
 
             <div class="col-md-6">
@@ -68,20 +72,23 @@
                 </div>
             </div>
         </div>
-        <div id="final-partida">
-            <h1>El juego ha concluido</h1>
-            <a href="{{ path('app_estadisticas_partida', {idSala : sala}) }}" class="btn btn-primary">Ir a
-                estadisticas</a>
+        <div id="final-partida" class="container">
+            <div class="row justify-content-center">
+                <div class="card-body text-center">
+                    <img src="{{ asset('assets/game-over.png') }}" style="max-width: 600px" alt="game-over">
+                </div>
+            </div>
         </div>
     </div>
 
     <script type="text/javascript">
         let control = 0
-        let totalTime = 30
+        let totalTime = 60
         var idImagen = '{{ idImagenes.0.id }}'
         var urlImagen = '{{ urlImagen1.0.imagenUrl }}'
         $('#btn-palabras').attr('disabled', 'disabled')
         $('#palabraRelacionada').attr('disabled', 'disabled')
+        $('#boton-estadisticas').hide()
         $('#descripcion-palabra').hide()
         $('#divImagen').hide()
         $('#final-partida').hide()
@@ -102,6 +109,7 @@
                     if (data['sala'] < 3) {
                         setTimeout("numeroUsuarios()", 1000)
                     } else {
+                        $('#reloj-inicial').hide()
                         $('#btn-palabras').removeAttr('disabled')
                         $('#palabraRelacionada').removeAttr('disabled')
                         $('#descripcion-palabra').show('slow')
@@ -114,13 +122,17 @@
         }
 
         function updateClock() {
-            $("#cronometro").text(totalTime)
+            if(totalTime >= 10){
+                $("#cronometro").text('00 : ' + totalTime)
+            }else{
+                $("#cronometro").text('00 : 0' + totalTime)
+            }
             if (totalTime === 0) {
                 $('#descripcion-palabra').text('{{ urlImagen2.0.descripcion | capitalize }}')
                 $("#imagenJuego").attr("src", "{{ asset(urlImagen2.0.imagenUrl) }}");
                 idImagen = {{ idImagenes.0.imagenId_2 }}
                     urlImagen = '{{ urlImagen2.0.imagenUrl }}'
-                totalTime = 30
+                totalTime = 60
 
                 control++
                 console.log(control)
@@ -129,10 +141,12 @@
                     $('#descripcion-palabra').text('{{ urlImagen3.0.descripcion | capitalize }}')
                     $("#imagenJuego").attr("src", "{{ asset(urlImagen3.0.imagenUrl) }}");
                     idImagen = {{ idImagenes.0.imagenId_3 }}
-                        urlImagen = '{{ urlImagen3.0.imagenUrl }}'
+                    urlImagen = '{{ urlImagen3.0.imagenUrl }}'
                 }
             } else if (control === 3) {
+                $('#title-estadisitica').text("El juego ha concluido")
                 $('#dom-del-juego').hide()
+                $('#boton-estadisticas').show()
                 $('#final-partida').show('slow')
 
             } else {
@@ -140,7 +154,6 @@
                     totalTime -= 1;
                     setTimeout("updateClock()", 1000);
                 }
-
             }
         }
 

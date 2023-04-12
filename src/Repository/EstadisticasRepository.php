@@ -60,6 +60,26 @@ class EstadisticasRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getResult();
     }
+
+    public function findByPartidasJugadas(){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT DISTINCT estadisticas.sala_partida
+                FROM App:Estadisticas estadisticas
+            ')
+            ->getResult();
+    }
+
+    public function findByJugadoresPartidas($numeroSala){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT estadisticas.nombre_jugador
+                FROM App:Estadisticas estadisticas
+                WHERE estadisticas.sala_partida = :sala
+            ')
+            ->setParameter('sala', $numeroSala)
+            ->getResult();
+    }
 //    /**
 //     * @return Estadisticas[] Returns an array of Estadisticas objects
 //     */

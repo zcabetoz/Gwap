@@ -52,6 +52,17 @@ class UsuarioPalabrasRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findPalabrasPartidas($numeroSala){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT DISTINCT palabras.palabras_relacionadas, palabras.url_imagen
+                FROM App:UsuarioPalabras palabras
+                WHERE palabras.numero_sala =:numSala
+            ')
+            ->setParameter('numSala', $numeroSala)
+            ->getResult();
+    }
+
     public function findByPalabraExiste($palabraForm, $idUsuario, $idImagen, $numeroSala){
         return $this->getEntityManager()
             ->createQuery('
