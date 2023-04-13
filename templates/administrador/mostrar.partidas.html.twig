@@ -30,7 +30,7 @@
                                     <td class="text-white">{{ partida.jugador2 }}</td>
                                     <td class="text-white">{{ partida.jugador3 }}</td>
                                     <td class="text-right">
-                                        <a href="#"
+                                        <a href="{{ path("app_mostrar_partidas_jugadas_detalle", {partida : partida.sala_partida}) }}"
                                            class="btn btn-primary botones">Detalle</a>
                                     </td>
                                 </tr>

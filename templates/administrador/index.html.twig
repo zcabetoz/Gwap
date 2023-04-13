@@ -3,56 +3,70 @@
 {% block title %}Administrador | {{ parent() }}{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
+        <div class="row justify-content-end">
+            <div class="col-md-2">
+                <div id="body-container">
+                    <div id="side-menu" class="menu-expanded">
+                        <div id="header">
+                            <div id="title"><span>Menu</span></div>
+                            <div id="menu-btn">
+                                <div class="btn-hamburguer"></div>
+                                <div class="btn-hamburguer"></div>
+                                <div class="btn-hamburguer"></div>
+                            </div>
+                        </div>
 
-    <div id="body-container">
-        <div id="side-menu" class="menu-expanded">
-            <div id="header">
-                <div id="title"><span>Menu</span></div>
-                <div id="menu-btn">
-                    <div class="btn-hamburguer"></div>
-                    <div class="btn-hamburguer"></div>
-                    <div class="btn-hamburguer"></div>
+                        <div id="profile">
+                            <div id="photo"><img src="{{ asset('assets/administrador.jpg') }}" alt="administrador.jpg">
+                            </div>
+                            <div id="name"><span>{{ administrador.getNombre }}</span></div>
+                        </div>
+                        <div id="menu-items">
+                            <div class="item">
+                                <a href="{{ path('app_listar_imagenes') }}">
+                                    <div class="icon"><img src="{{ asset('assets/listar-fotos.png') }}" alt=""></div>
+                                    <div class="title"><span>Listar Imagenes</span></div>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="{{ path('app_cargar_imagen') }}">
+                                    <div class="icon"><img src="{{ asset('assets/cargar-imagen.png') }}" alt=""></div>
+                                    <div class="title"><span>Agregar Imagen</span></div>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="{{ path('app_mostrar_partidas_jugadas') }}">
+                                    <div class="icon"><img src="{{ asset('assets/paritdas.png') }}" alt=""></div>
+                                    <div class="title"><span>Mostrar Partidas</span></div>
+                                </a>
+                            </div>
+                            <div class="item separator">
+
+                            </div>
+
+                            <div class="item">
+                                <a href="{{ path('app_dashboard') }}">
+                                    <div class="icon"><img src="{{ asset('assets/exit.png') }}" alt=""></div>
+                                    <div class="title"><span>Salir</span></div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
-            <div id="profile">
-                <div id="photo"><img src="{{ asset('assets/administrador.jpg') }}" alt="administrador.jpg"></div>
-                <div id="name"><span>{{ administrador.getNombre }}</span></div>
+            <div class="col-md-10">
+                <div class="card-header bg-primary title-header" style="border-radius: 20px">
+                    <i class="bi bi-joystick"><span style="margin-left: 5px">Gwap</span></i>
+                    <span style="margin-left: 100px">Usuarios Registrados</span>
+                </div>
             </div>
-            <div id="menu-items">
-                <div class="item">
-                    <a href="{{ path('app_listar_imagenes') }}">
-                        <div class="icon"><img src="{{ asset('assets/listar-fotos.png') }}" alt=""></div>
-                        <div class="title"><span>Listar Imagenes</span></div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="#">
-                        <div class="icon"><img src="{{ asset('assets/cargar-imagen.png') }}" alt=""></div>
-                        <div class="title"><span>Agregar Imagen</span></div>
-                    </a>
-                </div>
-                <div class="item">
-                    <a href="{{ path('app_mostrar_partidas_jugadas') }}">
-                        <div class="icon"><img src="{{ asset('assets/paritdas.png') }}" alt=""></div>
-                        <div class="title"><span>Mostrar Partidas</span></div>
-                    </a>
-                </div>
-                <div class="item separator">
-
-                </div>
-
-                <div class="item">
-                    <a href="{{ path('app_dashboard') }}">
-                        <div class="icon"><img src="{{ asset('assets/exit.png') }}" alt=""></div>
-                        <div class="title"><span>Salir</span></div>
-                    </a>
-                </div>
-
-            </div>
-
         </div>
     </div>
+
 
     <script>
         const btn = document.querySelector('#menu-btn')

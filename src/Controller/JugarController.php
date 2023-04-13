@@ -57,7 +57,6 @@ class JugarController extends AbstractController
                 $estadisiticas->setIdJugador($this->getUser()->getId());
                 $estadisiticas->setNombreJugador($this->getUser()->getNombre());
                 $estadisiticas->setSalaPartida($sala);
-//                $estadisiticas->setPartidaFinalizada(0);
                 $partida->setUsuarioId($jugador);
                 $partida->setImagenId1($imagen);
                 $partida->setContadorJugadores($numero_jugadores[0]['contador_jugadores']+1);

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registrar Usuario{% endblock %}
+
+{% block body %}
+    <div class="container text-secondary fw-semibold">
+        <div class="row">
+            <div class="card-header bg-primary title-header" style="border-radius: 20px">
+                <i class="bi bi-joystick"><span style="margin-left: 5px">Gwap</span></i>
+                <span style="margin-left: 100px">Cargar Imagenes</span>
+                <a href="{{ path('app_administrador') }}" class="volver">Volver</a>
+            </div>
+        </div>
+        <div class="row justify-content-center" style="margin-top: 30px">
+            <div class="bg-white rounded-5 p-5">
+                <div class="card-header text-center fs-1 fw-semibold">Nueva Imagen</div>
+                {{ form_start(form) }}
+                                    <div class="mb-3 mt-4">
+                                        {{ form_label(form.descripcion) }}
+                                        {{ form_widget (form.descripcion , {'attr' : {'class':'rounded-3  bg-light'}}) }}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        {{ form_label(form.categoria) }}
+                                        {{ form_widget(form.categoria, {'attr' : {'class':'rounded-3  bg-light'}}) }}
+                                    </div>
+
+                                    <div class="mb-3">
+                                        {{ form_label(form.imagenUrl) }}
+                                        {{ form_widget(form.imagenUrl, {'attr' : {'class':'rounded-3  bg-light '}}) }}
+                                    </div>
+                                    <p>
+                                        {{ form_widget(form.guardar, {'attr' : {'class' : 'form-control btn btn-primary mt-3 fw-semibold fs-5 rounded-5'}}) }}
+                                    </p>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

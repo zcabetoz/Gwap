@@ -39,6 +39,15 @@ class ImagenesRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllImages(){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT imagenes
+                FROM App:Imagenes imagenes
+                ORDER BY imagenes.id DESC 
+            ')
+        ->getResult();
+    }
     public function findUrlImagen($idImagen){
         return $this->getEntityManager()
             ->createQuery('
