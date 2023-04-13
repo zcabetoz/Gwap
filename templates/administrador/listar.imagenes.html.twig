@@ -28,7 +28,7 @@
                                     <td style="vertical-align: middle; color: white">{{ imagen.descripcion | capitalize }}</td>
                                     <td style="vertical-align: middle; color: white">{{ imagen.categoria | capitalize }}</td>
                                     <td class="text-end">
-                                        <a href="#"
+                                        <a href="{{ path('app_agregar_palabras_imagen', {idImagen:imagen.id}) }}"
                                            class="btn btn-primary botones" style="margin-right: 50px"><i class="bi bi-plus" style="margin-right: 8px"></i>Palabras</a>
                                     </td>
                                 </tr>

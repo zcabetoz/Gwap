@@ -6,6 +6,7 @@ use App\Entity\Estadisticas;
 use App\Entity\Imagenes;
 use App\Entity\UsuarioPalabras;
 use App\Form\ImagenesType;
+use App\Form\PalabraType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -130,6 +131,16 @@ class AdministradorController extends AbstractController
         }
         return $this->render('administrador/cargar.imagen.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     *@Route ("/administrador/agregar-palabras/{idImagen}/imagen", name="app_agregar_palabras_imagen")
+     */
+    public function agregarPalabrasImagenAction($idImagen):Response{
+        $form = $this->createForm(PalabraType::class);
+        return $this->render('administrador/agregar.palabras.html.twig', [
+            'form'=>$form->createView()
         ]);
 
     }
