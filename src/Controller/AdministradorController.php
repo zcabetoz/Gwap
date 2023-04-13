@@ -60,7 +60,6 @@ class AdministradorController extends AbstractController
             return $this->redirectToRoute('app_dashboard');
         }
         $partidasJugadas = $this->em->getRepository(Estadisticas::class)->findByPartidasJugadas();
-        dump($partidasJugadas);
         if($partidasJugadas){
             for($i=0; $i<count($partidasJugadas);$i++){
                 $jugadores = $this->em->getRepository(Estadisticas::class)->findByJugadoresPartidas($partidasJugadas[$i]['sala_partida']);

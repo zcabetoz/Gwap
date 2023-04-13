@@ -67,15 +67,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param $id
      */
-    public function __construct()
+    public function __construct($roles = null)
     {
-        $this->roles = ['ROLE_USER'];
+        $this->roles = $roles;
         $this->puntaje_partida = 0;
         $this->puntaje_global = 0;
     }
 
     /**
-     *@see UserInterface
+     * @see UserInterface
      */
     public function getId(): ?int
     {
@@ -87,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -104,7 +104,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**

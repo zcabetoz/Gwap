@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Estadisticas;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Symfony\Component\VarDumper\Dumper\esc;
 
 /**
  * @extends ServiceEntityRepository<Estadisticas>
@@ -66,7 +67,9 @@ class EstadisticasRepository extends ServiceEntityRepository
             ->createQuery('
                 SELECT DISTINCT estadisticas.sala_partida
                 FROM App:Estadisticas estadisticas
+                WHERE estadisticas.partida_finalizada = :estado
             ')
+            ->setParameter('estado',1)
             ->getResult();
     }
 
@@ -78,6 +81,17 @@ class EstadisticasRepository extends ServiceEntityRepository
                 WHERE estadisticas.sala_partida = :sala
             ')
             ->setParameter('sala', $numeroSala)
+            ->getResult();
+    }
+
+    public function findBYPartidaFinalizada($sala){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT estadisticas.id
+                FROM App:Estadisticas estadisticas
+                WHERE estadisticas.sala_partida = :idSala
+            ')
+            ->setParameter('idSala', $sala)
             ->getResult();
     }
 //    /**

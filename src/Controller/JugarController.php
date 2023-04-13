@@ -36,6 +36,8 @@ class JugarController extends AbstractController
         $contadorSalas = $this->em->getRepository(Partidas::class)->findNumeroSalas();
         $idImagen = $this->em->getRepository(Partidas::class)->findImagen($sala);
         $partida = new Partidas($sala, $contadorSalas[0]['contador_salas'], $idImagen[0]['imagenId_2'], $idImagen[0]['imagenId_3'],1);
+        $estadisiticas = new Estadisticas();
+        $estadisiticas->setPartidaFinalizada(0);
         $get = $request->query->all();
 
         if (isset($get['idJugador'])) {
@@ -44,16 +46,18 @@ class JugarController extends AbstractController
             if (!$jugando) {
                 if($numero_jugadores[0]['contador_jugadores']===2){
                     $salasNoDisponibles = $this->em->getRepository(Partidas::class)->findBySalaLlena($sala);
-                    $this->cambiarestados($salasNoDisponibles);
+                    $partidaFinalizada = $this->em->getRepository(Estadisticas::class)->findBYPartidaFinalizada($sala);
+                    $this->cambiarestados($salasNoDisponibles, $partidaFinalizada);
                     $partida->setEstadoPartida(0);
+                    $estadisiticas->setPartidaFinalizada(1);
                 }
                 $jugador = $this->em->getRepository(User::class)->find($get['idJugador']);
                 $imagen = $this->em->getRepository(Imagenes::class)->find($idImagen[0]['id']);
-                $estadisiticas = new Estadisticas();
                 $estadisiticas->setUsernameJugador($this->getUser()->getUserIdentifier());
                 $estadisiticas->setIdJugador($this->getUser()->getId());
                 $estadisiticas->setNombreJugador($this->getUser()->getNombre());
                 $estadisiticas->setSalaPartida($sala);
+//                $estadisiticas->setPartidaFinalizada(0);
                 $partida->setUsuarioId($jugador);
                 $partida->setImagenId1($imagen);
                 $partida->setContadorJugadores($numero_jugadores[0]['contador_jugadores']+1);
@@ -77,12 +81,16 @@ class JugarController extends AbstractController
         ]);
     }
 
-    private function cambiarestados($salasNoDisponibles){
+    private function cambiarestados($salasNoDisponibles, $partidaFinalizada){
         $estadoSala1 = $this->em->getRepository(Partidas::class)->find($salasNoDisponibles[0]['id']);
         $estadoSala1->setEstadoPartida(0);
         $estadoSala2 = $this->em->getRepository(Partidas::class)->find($salasNoDisponibles[1]['id']);
         $estadoSala2->setEstadoPartida(0);
 
+        $estadoEstadisticasSala1 = $this->em->getRepository(Estadisticas::class)->find($partidaFinalizada[0]['id']);
+        $estadoEstadisticasSala1->setPartidaFinalizada(1);
+        $estadoEstadisticasSala2 = $this->em->getRepository(Estadisticas::class)->find($partidaFinalizada[1]['id']);
+        $estadoEstadisticasSala2->setPartidaFinalizada(1);
     }
 
     /**

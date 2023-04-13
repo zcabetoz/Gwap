@@ -92,14 +92,14 @@ class DashboardController extends AbstractController
         $ultimaPartida = $this->em->getRepository(Estadisticas::class)->findUltimaPartida();
         $contador = empty($ultimaPartida) ? 0 : $ultimaPartida[0]['sala_partida'];
         $arrayImagenes = [];
-        $i=0;
         $jugando = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
         if (!$jugando) {
             $cantidadImagenes = $this->em->getRepository(Imagenes::class)->findAll();
-            while($i<3){
+            while(count($arrayImagenes)<3){
                 $imagenAleatoria = rand(1, count($cantidadImagenes));
-                $arrayImagenes[$i] = $imagenAleatoria;
-                $i++;
+                if(!in_array($imagenAleatoria, $arrayImagenes) ){
+                    $arrayImagenes[] = $imagenAleatoria;
+                }
             }
             $imagenId = $this->em->getRepository(Imagenes::class)->find($arrayImagenes[0]);
             $partidas = new Partidas($contador + 1, $contador+1, $arrayImagenes[1], $arrayImagenes[2], 1, 1);
@@ -108,6 +108,7 @@ class DashboardController extends AbstractController
             $estadisiticas->setIdJugador($this->getUser()->getId());
             $estadisiticas->setNombreJugador($this->getUser()->getNombre());
             $estadisiticas->setSalaPartida($contador+1);
+            $estadisiticas->setPartidaFinalizada(0);
             $partidas->setUsuarioId($this->getUser());
             $partidas->setImagenId1($imagenId);
             $this->em->persist($partidas);

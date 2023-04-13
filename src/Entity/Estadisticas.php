@@ -37,6 +37,11 @@ class Estadisticas
      */
     private $nombre_jugador;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $partida_finalizada;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Estadisticas
     public function setNombreJugador(string $nombre_jugador): self
     {
         $this->nombre_jugador = $nombre_jugador;
+
+        return $this;
+    }
+
+    public function getPartidaFinalizada(): ?int
+    {
+        return $this->partida_finalizada;
+    }
+
+    public function setPartidaFinalizada(int $partida_finalizada): self
+    {
+        $this->partida_finalizada = $partida_finalizada;
 
         return $this;
     }

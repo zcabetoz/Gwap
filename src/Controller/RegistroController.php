@@ -32,7 +32,12 @@ class RegistroController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('app_dashboard');
         }
-        $user = new User();
+        $numeroUsuarios = $this->em->getRepository(User::Class)->findAll();
+        if($numeroUsuarios){
+            $user = new User(["ROLE_USER"]);
+        }else{
+            $user = new User(["ROLE_ADMIN"]);
+        }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
