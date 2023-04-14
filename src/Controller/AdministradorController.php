@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Estadisticas;
 use App\Entity\Imagenes;
+use App\Entity\Palabra;
 use App\Entity\UsuarioPalabras;
 use App\Form\ImagenesType;
 use App\Form\PalabraType;
@@ -137,14 +138,31 @@ class AdministradorController extends AbstractController
     /**
      *@Route ("/administrador/agregar-palabras/{idImagen}/imagen", name="app_agregar_palabras_imagen")
      */
-    public function agregarPalabrasImagenAction($idImagen):Response{
-        $form = $this->createForm(PalabraType::class);
-        return $this->render('administrador/agregar.palabras.html.twig', [
-            'form'=>$form->createView()
-        ]);
+    public function agregarPalabrasImagenAction(Request $request, $idImagen):Response{
+        if(!$this->validarRole()){
+            return $this->redirectToRoute('app_dashboard');
+        }
+        $imagen = $this->em->getRepository(Imagenes::class)->find($idImagen);
+        $palabra = new Palabra();
+        $palabra->setIdImagen($idImagen);
+        $form = $this->createForm(PalabraType::class, $palabra);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $palabra->setIdImagen($imagen);
+            $this->em->persist($palabra);
+            $this->em->flush();
+        }
+        $palabraRelacioinadas = $this->em->getRepository(Palabra::class)->findByPalabrasRelacionadas($idImagen);
 
+        return $this->render('administrador/agregar.palabras.html.twig', [
+            'form'=>$form->createView(),
+            'imagen'=>$imagen,
+            'palabrasRelacionadas'=>$palabraRelacioinadas
+
+        ]);
     }
-    public function validarRole(){
+    public function validarRole(): bool
+    {
         $adminrRole = $this->getUser()->getRoles();
         if ($adminrRole[0] === 'ROLE_USER') {
             return false;

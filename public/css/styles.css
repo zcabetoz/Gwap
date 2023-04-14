@@ -30,7 +30,7 @@ body{
     color: white;
     margin-top: 20px;
 }
-#divImagen{
+#divImagen, .agregar{
     color: white;
     border: solid 1px white ;
     border-radius: 20px;

@@ -51,6 +51,19 @@ class PalabraRepository extends ServiceEntityRepository
             ->setMaxResults(1)
             ->getResult();
     }
+    public function findByPalabrasRelacionadas($idImagen){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT palabras.palabra
+                FROM App:Palabra palabras
+                WHERE palabras.id_imagen = :id
+                order by palabras.id DESC 
+            ')
+            ->setParameter('id',$idImagen)
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Palabra[] Returns an array of Palabra objects
 //     */

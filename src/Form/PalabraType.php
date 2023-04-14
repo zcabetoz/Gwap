@@ -13,7 +13,6 @@ class PalabraType extends AbstractType
     {
         $builder
             ->add('palabra')
-            ->add('id_imagen')
         ;
     }
     public function configureOptions(OptionsResolver $resolver): void
