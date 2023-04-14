@@ -11,6 +11,7 @@ use App\Form\PalabraType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -161,6 +162,19 @@ class AdministradorController extends AbstractController
 
         ]);
     }
+
+    /**
+     * @Route("/administrador/eliminar-palabras/{idPalabra}/palabra", name="administrador_eliminar_palabra")
+     */
+    public function eliminarEstadoRegionAction($idPalabra):Response
+    {
+        $palabra = $this->em->getRepository(Palabra::class)->find($idPalabra);
+        $idImagen = $palabra->getIdImagen()->getId();
+        $this->em->remove($palabra);
+        $this->em->flush();
+        return $this->redirectToRoute('app_agregar_palabras_imagen', ['idImagen' => $idImagen]);
+    }
+
     public function validarRole(): bool
     {
         $adminrRole = $this->getUser()->getRoles();

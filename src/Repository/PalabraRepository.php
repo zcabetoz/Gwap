@@ -54,7 +54,7 @@ class PalabraRepository extends ServiceEntityRepository
     public function findByPalabrasRelacionadas($idImagen){
         return $this->getEntityManager()
             ->createQuery('
-                SELECT palabras.palabra
+                SELECT palabras.palabra, palabras.id
                 FROM App:Palabra palabras
                 WHERE palabras.id_imagen = :id
                 order by palabras.id DESC 
@@ -63,7 +63,17 @@ class PalabraRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    public function findByPalabra($idPalabra){
+        return $this->getEntityManager()
+            ->createQuery('
+                SELECT palabra
+                FROM App:Palabra palabra
+                WHERE palabra.id = :id
+            ')
+            ->setParameter('id', $idPalabra)
+            ->setMaxResults(1)
+            ->getResult();
+    }
 //    /**
 //     * @return Palabra[] Returns an array of Palabra objects
 //     */
