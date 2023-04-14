@@ -36,9 +36,9 @@ class DashboardController extends AbstractController
         $rol = $user->getRoles();
         return $this->render('dashboard/index.html.twig', [
             'usuario' => $user,
-            'data' =>[],
-            'estadoPartida'=>[],
-            'rol'=>$rol[0]
+            'data' => [],
+            'estadoPartida' => [],
+            'rol' => $rol[0]
         ]);
     }
 
@@ -69,7 +69,7 @@ class DashboardController extends AbstractController
             $data[] = [
                 'sala' => $salaId,
                 'users' => $users,
-                'estadoSala'=>$estadoPartida[$i]
+                'estadoSala' => $estadoPartida[$i]
             ];
             $i++;
         }
@@ -79,8 +79,8 @@ class DashboardController extends AbstractController
             'data' => $data,
             'salaJugador' => $salaJugador,
             'usuario' => $user,
-            'numeroJugadores'=>$numeroJugadores,
-            'estadoPartida'=>$estadoPartida
+            'numeroJugadores' => $numeroJugadores,
+            'estadoPartida' => $estadoPartida
         ]);
     }
 
@@ -95,19 +95,19 @@ class DashboardController extends AbstractController
         $jugando = $this->em->getRepository(Partidas::class)->findJugando($this->getUser()->getId());
         if (!$jugando) {
             $cantidadImagenes = $this->em->getRepository(Imagenes::class)->findAll();
-            while(count($arrayImagenes)<3){
+            while (count($arrayImagenes) < 3) {
                 $imagenAleatoria = rand(1, count($cantidadImagenes));
-                if(!in_array($imagenAleatoria, $arrayImagenes) ){
+                if (!in_array($imagenAleatoria, $arrayImagenes)) {
                     $arrayImagenes[] = $imagenAleatoria;
                 }
             }
             $imagenId = $this->em->getRepository(Imagenes::class)->find($arrayImagenes[0]);
-            $partidas = new Partidas($contador + 1, $contador+1, $arrayImagenes[1], $arrayImagenes[2], 1, 1);
+            $partidas = new Partidas($contador + 1, $contador + 1, $arrayImagenes[1], $arrayImagenes[2], 1, 1);
             $estadisiticas = new Estadisticas();
             $estadisiticas->setUsernameJugador($this->getUser()->getUserIdentifier());
             $estadisiticas->setIdJugador($this->getUser()->getId());
             $estadisiticas->setNombreJugador($this->getUser()->getNombre());
-            $estadisiticas->setSalaPartida($contador+1);
+            $estadisiticas->setSalaPartida($contador + 1);
             $estadisiticas->setPartidaFinalizada(0);
             $partidas->setUsuarioId($this->getUser());
             $partidas->setImagenId1($imagenId);
@@ -127,12 +127,31 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/stadisticas-globales", name="app_dashboard_estadisticas_globales")
      */
-    public function estadisticasGlobalesAction(){
+    public function estadisticasGlobalesAction()
+    {
 
         $usuarios = $this->em->getRepository(User::class)->findByPuntajeGlobal();
 
-        return $this->render('dashboard/estadisiticas.globales.html.twig',[
-            'usuarios'=>$usuarios
+        return $this->render('dashboard/estadisiticas.globales.html.twig', [
+            'usuarios' => $usuarios
         ]);
+    }
+
+    /**
+     * @Route("/dashboard/eliminarPartidaSinJugar", name="app_dashboard_eliminar_partida_sin_jugar")
+     */
+    public function eliminarPartidaSinJugarAction(): Response
+    {
+        $idUsuario = $this->getUser()->getId();
+        $partida = $this->em->getRepository(Partidas::class)->findByIdSalaJugador($idUsuario);
+        if ($partida) {
+            $eliminarPartida = $this->em->getRepository(Partidas::class)->find($partida[0]['id']);
+
+            if ($eliminarPartida->getEstadoPartida() == '0') {
+                $this->em->remove($eliminarPartida);
+                $this->em->flush();
+            }
+        }
+        return $this->redirectToRoute('app_logout');
     }
 }

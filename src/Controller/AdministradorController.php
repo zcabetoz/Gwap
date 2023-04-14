@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Estadisticas;
 use App\Entity\Imagenes;
 use App\Entity\Palabra;
+use App\Entity\User;
 use App\Entity\UsuarioPalabras;
 use App\Form\ImagenesType;
 use App\Form\PalabraType;
@@ -38,8 +39,10 @@ class AdministradorController extends AbstractController
             return $this->redirectToRoute('app_dashboard');
         }
         $administrador = $this->getUser();
+        $usuarios = $this->em->getRepository(User::class)->findAll();
         return $this->render('administrador/index.html.twig', [
             'administrador' => $administrador,
+            'usuarios'=>$usuarios
 
         ]);
     }
