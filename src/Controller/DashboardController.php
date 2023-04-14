@@ -89,6 +89,15 @@ class DashboardController extends AbstractController
      */
     public function crearPartidaAction()
     {
+        $imagenesDisponibles = $this->em->getRepository(Imagenes::class)->findAll();
+        if (count($imagenesDisponibles) < 10){
+            $this->addFlash(
+                'notice',
+                'No hay suficientes imagenes para iniciar la partida!, comunicarse con el administrador! Debe haber al menos 10 imagenes!'
+            );
+            return $this->redirectToRoute('app_dashboard');
+        }
+
         $ultimaPartida = $this->em->getRepository(Estadisticas::class)->findUltimaPartida();
         $contador = empty($ultimaPartida) ? 0 : $ultimaPartida[0]['sala_partida'];
         $arrayImagenes = [];

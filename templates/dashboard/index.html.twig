@@ -59,7 +59,7 @@
             </div>
             {% for flashMessage in app.session.flashbag.get('notice') %}
                 <div class="mt-3">
-                    <div class="alert alert-danger alert-dismissible fade show rounded-4 fw-semibold" role="alert">
+                    <div class="alert alert-danger alert-dismissible fade show rounded-4 fw-semibold text-center" role="alert">
                         <strong class="px-3">Error </strong>{{ flashMessage }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
