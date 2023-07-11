@@ -9,6 +9,8 @@ use App\Entity\User;
 use App\Entity\UsuarioPalabras;
 use App\Form\ImagenesType;
 use App\Form\PalabraType;
+use App\Repository\PalabraRepository;
+use App\Repository\PartidasRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -148,7 +150,7 @@ class AdministradorController extends AbstractController
         }
         $imagen = $this->em->getRepository(Imagenes::class)->find($idImagen);
         $palabra = new Palabra();
-        $palabra->setIdImagen($idImagen);
+//        $palabra->setIdImagen($idImagen);
         $form = $this->createForm(PalabraType::class, $palabra);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
